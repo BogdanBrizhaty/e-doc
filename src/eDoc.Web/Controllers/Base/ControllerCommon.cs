@@ -11,7 +11,7 @@ namespace eDoc.Web.Controllers.Base
     {
         private IMapper _mapper = null;
 
-        protected IMapper mapper
+        protected IMapper Mapper
         {
             get
             {
