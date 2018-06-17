@@ -221,6 +221,7 @@
     <Compile Include="Common\Exceptions\NotInitializableTypeException.cs" />
     <Compile Include="Common\Singleton.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Base\ControllerCommon.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
