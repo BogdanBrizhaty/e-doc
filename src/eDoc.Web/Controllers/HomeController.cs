@@ -1,4 +1,5 @@
-﻿using eDoc.Web.Base;
+﻿using AutoMapper;
+using eDoc.Web.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,10 @@ namespace eDoc.Web.Controllers
 {
     public class HomeController : Controller
     {
+        public HomeController(IMapper mapper)
+        {
+            var mp = mapper;
+        }
         public ActionResult Index()
         {
             return View();
