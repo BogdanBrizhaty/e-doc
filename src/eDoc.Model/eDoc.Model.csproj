@@ -56,6 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Context\ApplicationContextBase.cs" />
+    <Compile Include="Data\Context\eDocContext.cs" />
+    <Compile Include="Data\Entities\ApplicationUserBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
