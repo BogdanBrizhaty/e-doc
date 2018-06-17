@@ -18,7 +18,7 @@ namespace eDoc.Web.Common
                     if (ctors.Any(ci => ci.IsPublic))
                         throw new Exception($"{nameof(T)} is not valid due to it's publicity");
 
-                    _instance = Activator.CreateInstance(typeof(T)) as T;
+                    _instance = Activator.CreateInstance(typeof(T), true) as T;
                 }
 
                 return _instance;

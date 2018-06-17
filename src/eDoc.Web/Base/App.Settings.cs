@@ -16,13 +16,13 @@ namespace eDoc.Web.Base
         {
             private const string DbConnectionNameKey = "DbConnectionName";
 
-            private static readonly NameValueCollection _appSettings = WebConfigurationManager.AppSettings;
+            private readonly NameValueCollection _appSettings = WebConfigurationManager.AppSettings;
 
             private AppSettings() 
             {
             }
 
-            public static string ActiveDbConnectionName => _appSettings[DbConnectionNameKey];
+            public string ActiveDbConnectionName => _appSettings[DbConnectionNameKey];
         }
     }
 }
