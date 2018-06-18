@@ -8,6 +8,8 @@ using Owin;
 using eDoc.Web.Models;
 using eDoc.Model.Data.Context;
 using eDoc.Model.Data.Entities;
+using eDoc.Model.Managers;
+using eDoc.Model.Services;
 
 namespace eDoc.Web
 {
@@ -18,7 +20,7 @@ namespace eDoc.Web
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationContextBase.Create<EDocContext>);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>((new OwinFactory()).Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user

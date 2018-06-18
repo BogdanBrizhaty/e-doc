@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using eDoc.Web.Models;
+using eDoc.Model.Managers;
 
 namespace eDoc.Web.Controllers
 {
