@@ -13,16 +13,26 @@ using System.Threading.Tasks;
 
 namespace eDoc.Model.Services
 {
-    public class OwinFactory
+    public sealed class OwinFactory
     {
-        // some options
-        public OwinFactory()
-        {
+        private string _connStringName;
 
-        }
-        public ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
+        public OwinFactory(string connStringName)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUserBase>(context.Get<EDocContext>()));
+            if (String.IsNullOrEmpty(connStringName))
+                throw new ArgumentOutOfRangeException("Connection string can not be empty", null as Exception);
+
+            _connStringName = connStringName;
+        }
+
+        public ApplicationContextBase CreateApplicationContext<TContext>() where TContext : ApplicationContextBase
+        {
+            return Activator.CreateInstance(typeof(TContext), _connStringName) as ApplicationContextBase;
+        }
+
+        public ApplicationUserManager CreateUserManager(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
+        {
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUserBase>(context.Get<ApplicationContextBase>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUserBase>(manager)
             {
@@ -65,6 +75,11 @@ namespace eDoc.Model.Services
                     new DataProtectorTokenProvider<ApplicationUserBase>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+
+        public SignInManagerBase CreateSignInManager(IdentityFactoryOptions<SignInManagerBase> options, IOwinContext context)
+        {
+            return new SignInManagerBase(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
     }
 }

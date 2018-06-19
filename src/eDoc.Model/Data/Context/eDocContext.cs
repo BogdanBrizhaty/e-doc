@@ -8,5 +8,8 @@ namespace eDoc.Model.Data.Context
 {
     public class EDocContext : ApplicationContextBase
     {
+        public EDocContext(string connStringName) : base(connStringName)
+        {
+        }
     }
 }

@@ -1,6 +1,11 @@
-﻿using eDoc.Web.Loader;
+﻿using eDoc.Model.Data.Context;
+using eDoc.Model.Services;
+using eDoc.Web.Base;
+using eDoc.Web.Loader;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Modules;
+using Ninject.Web.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,25 +18,47 @@ namespace eDoc.Web.NInject
 {
     public class NInjectDependencyResolver : IDependencyResolver
     {
-        private readonly IKernel _kernel;
+        private IKernel _kernel;
 
         #region Constructors
         private NInjectDependencyResolver(IKernel kernel)
         {
             _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
-            var fctr = new DefaultControllerFactory();
-            _kernel.Bind<IControllerFactory>().ToConstant(fctr);
+
+            _kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+            _kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+            _kernel.Bind<IControllerFactory>().To<DefaultControllerFactory>();
+            _kernel.Unbind<ModelValidatorProvider>();
+
+            _kernel.Bind<ApplicationContextBase>()
+                .To<EDocContext>()
+                .WithConstructorArgument("connStringName", App.Settings.ActiveDbConnectionName);
+
+            _kernel.Bind<OwinFactory>()
+                .ToSelf()
+                .WithConstructorArgument("connStringName", App.Settings.ActiveDbConnectionName);
+
+            LoadModules();
+        }
+
+        public IKernel GetCurrentKernel()
+        {
+            return _kernel;
         }
 
         public NInjectDependencyResolver()
-            :this(new StandardKernel())
+            : this(new StandardKernel())
+        {
+
+        }
+
+        private void LoadModules()
         {
             var modules = Assembly
                 .GetExecutingAssembly()
                 .GetTypes()
                 .Where(t => typeof(NinjectModule).IsAssignableFrom(t))
                 .ToList();
-
 
             modules.ForEach(m => _kernel.Load(TypeLoader.Initialize<INinjectModule>(m)));
         }

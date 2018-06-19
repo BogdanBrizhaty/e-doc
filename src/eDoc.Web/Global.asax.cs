@@ -1,6 +1,8 @@
 ﻿using eDoc.Web.App_Start;
 using eDoc.Web.NInject;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject.Modules;
+using Ninject.Web.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +22,6 @@ namespace eDoc.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            //AutoMapperConfig.Initialize()
-            DependencyResolverConfig.Configure(new NInjectDependencyResolver());
         }
     }
 }
