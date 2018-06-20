@@ -6,18 +6,35 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using eDoc.Web.Models;
+using eDoc.Model.Data.Context;
+using eDoc.Model.Data.Entities;
+using eDoc.Model.Managers;
+using eDoc.Model.Services;
+using System.Web.Mvc;
+using eDoc.Web.Base;
 
 namespace eDoc.Web
 {
     public partial class Startup
     {
+        private OwinFactory _owinFactory;
+        public OwinFactory OwinFactory
+        {
+            get
+            {
+                if (_owinFactory == null)
+                    _owinFactory = DependencyResolver.Current.GetService<OwinFactory>();
+
+                return _owinFactory;
+            }
+        }
+
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext(OwinFactory.CreateApplicationContext<EDocContext>);
+            app.CreatePerOwinContext<ApplicationUserManager>(OwinFactory.CreateUserManager);
+            app.CreatePerOwinContext<SignInManagerBase>(OwinFactory.CreateSignInManager);
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -30,7 +47,7 @@ namespace eDoc.Web
                 {
                     // Enables the application to validate the security stamp when the user logs in.
                     // This is a security feature which is used when you change a password or add an external login to your account.  
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUserBase>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }

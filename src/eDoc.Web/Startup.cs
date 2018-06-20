@@ -1,4 +1,6 @@
 ﻿using Microsoft.Owin;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Ninject.Web.Common;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(eDoc.Web.Startup))]

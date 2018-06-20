@@ -14,6 +14,7 @@ namespace eDoc.Web.Controllers
         {
             var mp = mapper;
         }
+
         public ActionResult Index()
         {
             return View();

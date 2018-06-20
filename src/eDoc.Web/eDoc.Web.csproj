@@ -211,7 +211,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\DependencyResolverConfig.cs" />
-    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="AutoMapper\ProfileBase.cs" />
@@ -230,7 +229,6 @@
     <Compile Include="Loader\IInitializable.cs" />
     <Compile Include="Loader\TypeLoader.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="NInject\Modules\AutoMapperModule.cs" />
     <Compile Include="NInject\NInjectDependencyResolver.cs" />
