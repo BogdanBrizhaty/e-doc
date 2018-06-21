@@ -14,19 +14,23 @@ namespace eDoc.Web.Base
         public static AppSettings Settings => AppSettings.Instance;
         public sealed class AppSettings : Singleton<AppSettings>
         {
-            private const string DbConnectionNameKey = "DbConnectionName";
-            private const string DefaultCustomCookiesExpirationDaysKey = "DefaultCustomCookiesExpirationDaysKey";
-
             private readonly NameValueCollection _appSettings = WebConfigurationManager.AppSettings;
 
             private AppSettings() 
             {
             }
 
-            public string ActiveDbConnectionName => _appSettings[DbConnectionNameKey];
-            public int DefaultCustomCookiesExpirationDays => _appSettings[DefaultCustomCookiesExpirationDaysKey] == null
+            public string AppHost => _appSettings[AppSettingsKeys.AppHostKey];
+            public string ActiveDbConnectionName => _appSettings[AppSettingsKeys.DbConnectionNameKey];
+            public int DefaultCustomCookiesExpirationDays => _appSettings[AppSettingsKeys.DefaultCustomCookiesExpirationDaysKey] == null
                 ? 1
-                : Convert.ToInt32(_appSettings[DefaultCustomCookiesExpirationDaysKey]);
+                : Convert.ToInt32(_appSettings[AppSettingsKeys.DefaultCustomCookiesExpirationDaysKey]);
+        }
+        private static class AppSettingsKeys
+        {
+            public const string AppHostKey = "AppHost";
+            public const string DbConnectionNameKey = "DbConnectionName";
+            public const string DefaultCustomCookiesExpirationDaysKey = "DefaultCustomCookiesExpirationDays";
         }
     }
 }
