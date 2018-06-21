@@ -15,10 +15,7 @@ namespace eDoc.Web.Managers
 
         public CookieManager(HttpContextBase httpContext)
         {
-            if (httpContext == null)
-                throw new ArgumentNullException(nameof(httpContext));
-
-            _context = httpContext;
+            _context = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
         }
         public void AddOrUpdateItem(string key, object value)
         {

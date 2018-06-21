@@ -14,10 +14,7 @@ namespace eDoc.Web.Managers
 
         public SessionManager(HttpSessionState httpSessionState)
         {
-            if (httpSessionState == null)
-                throw new ArgumentNullException(nameof(httpSessionState));
-
-            _session = new HttpSessionStateWrapper(httpSessionState);
+            _session = new HttpSessionStateWrapper(httpSessionState ?? throw new ArgumentNullException(nameof(httpSessionState)));
         }
 
         public void AddOrUpdateItem(string key, object value)
