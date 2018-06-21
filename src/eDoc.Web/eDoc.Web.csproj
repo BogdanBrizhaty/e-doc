@@ -218,6 +218,7 @@
     <Compile Include="Base\App.Settings.cs" />
     <Compile Include="Base\App.Base.cs" />
     <Compile Include="Common\Exceptions\NotInitializableTypeException.cs" />
+    <Compile Include="Common\Exceptions\SessionNotStartedException.cs" />
     <Compile Include="Common\Singleton.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -227,6 +228,8 @@
     </Compile>
     <Compile Include="Loader\IInitializable.cs" />
     <Compile Include="Loader\TypeLoader.cs" />
+    <Compile Include="Managers\CookieManager.cs" />
+    <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="NInject\Modules\AutoMapperModule.cs" />

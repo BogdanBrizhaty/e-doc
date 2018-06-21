@@ -15,6 +15,7 @@ namespace eDoc.Web.Base
         public sealed class AppSettings : Singleton<AppSettings>
         {
             private const string DbConnectionNameKey = "DbConnectionName";
+            private const string DefaultCustomCookiesExpirationDaysKey = "DefaultCustomCookiesExpirationDaysKey";
 
             private readonly NameValueCollection _appSettings = WebConfigurationManager.AppSettings;
 
@@ -23,6 +24,9 @@ namespace eDoc.Web.Base
             }
 
             public string ActiveDbConnectionName => _appSettings[DbConnectionNameKey];
+            public int DefaultCustomCookiesExpirationDays => _appSettings[DefaultCustomCookiesExpirationDaysKey] == null
+                ? 1
+                : Convert.ToInt32(_appSettings[DefaultCustomCookiesExpirationDaysKey]);
         }
     }
 }

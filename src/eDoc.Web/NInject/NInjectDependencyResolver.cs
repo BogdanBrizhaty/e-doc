@@ -1,4 +1,5 @@
 ﻿using eDoc.Model.Data.Context;
+using eDoc.Model.Managers;
 using eDoc.Model.Services;
 using eDoc.Web.Base;
 using eDoc.Web.Loader;
@@ -52,17 +53,6 @@ namespace eDoc.Web.NInject
 
         }
 
-        private void LoadModules()
-        {
-            var modules = Assembly
-                .GetExecutingAssembly()
-                .GetTypes()
-                .Where(t => typeof(NinjectModule).IsAssignableFrom(t))
-                .ToList();
-
-            modules.ForEach(m => _kernel.Load(TypeLoader.Initialize<INinjectModule>(m)));
-        }
-
         public NInjectDependencyResolver(INinjectModule initialModule)
             : this(new StandardKernel(initialModule))
         {
@@ -83,6 +73,22 @@ namespace eDoc.Web.NInject
         public IEnumerable<object> GetServices(Type serviceType)
         {
             return _kernel.GetAll(serviceType);
+        }
+
+        private void LoadModules()
+        {
+            var modules = Assembly
+                .GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => typeof(NinjectModule).IsAssignableFrom(t))
+                .ToList();
+
+            modules.ForEach(m => _kernel.Load(TypeLoader.Initialize<INinjectModule>(m)));
+        }
+
+        public void LoadModule(INinjectModule module)
+        {
+            _kernel.Load(module);
         }
     }
 }
