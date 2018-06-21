@@ -74,11 +74,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Enums\DateTimeUnit.cs" />
     <Compile Include="Data\Context\ApplicationContextBase.cs" />
     <Compile Include="Data\Context\eDocContext.cs" />
     <Compile Include="Data\Entities\ApplicationUserBase.cs" />
-    <Compile Include="Managers\ApplicationUserManager.cs" />
-    <Compile Include="Managers\SigninManagerBase.cs" />
+    <Compile Include="Extensions\DateTimeExt.cs" />
+    <Compile Include="Managers\ContextState\IContextStateManager.cs" />
+    <Compile Include="Managers\Identity\ApplicationUserManager.cs" />
+    <Compile Include="Managers\Identity\SigninManagerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\OwinFactory.cs" />
   </ItemGroup>
@@ -87,6 +90,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Common\Constants\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Repositories\" />
     <Folder Include="UnitOfWork\" />
   </ItemGroup>
