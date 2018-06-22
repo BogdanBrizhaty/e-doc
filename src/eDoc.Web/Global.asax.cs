@@ -1,4 +1,5 @@
 ﻿using eDoc.Web.App_Start;
+using eDoc.Web.Base;
 using eDoc.Web.NInject;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject.Modules;
@@ -22,6 +23,9 @@ namespace eDoc.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            if (!App.IsStarted)
+                App.Initialize();
         }
     }
 }
