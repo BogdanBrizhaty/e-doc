@@ -1,5 +1,4 @@
 ﻿using eDoc.Model.Data.Context;
-using eDoc.Model.Data.Migrations;
 using eDoc.Web.Base;
 using eDoc.Web.Loader;
 using System;
@@ -20,7 +19,12 @@ namespace eDoc.Web.Managers
             }
             public void Execute(ApplicationContextBase contextBase)
             {
+                
                 OnExecute(contextBase);
+                AfterExecute(contextBase);
+            }
+            private void AfterExecute(ApplicationContextBase contextBase)
+            {
                 contextBase.SaveChanges();
             }
             protected abstract void OnExecute(ApplicationContextBase contextBase);
