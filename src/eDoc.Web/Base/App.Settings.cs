@@ -21,6 +21,7 @@ namespace eDoc.Web.Base
             }
 
             public string AppHost => _appSettings[AppSettingsKeys.AppHostKey];
+            public string AppName => _appSettings[AppSettingsKeys.AppNameKey];
             public string ActiveDbConnectionName => _appSettings[AppSettingsKeys.DbConnectionNameKey];
             public int DefaultCustomCookiesExpirationDays => _appSettings[AppSettingsKeys.DefaultCustomCookiesExpirationDaysKey] == null
                 ? 1
@@ -28,6 +29,7 @@ namespace eDoc.Web.Base
         }
         private static class AppSettingsKeys
         {
+            public const string AppNameKey = "AppName";
             public const string AppHostKey = "AppHost";
             public const string DbConnectionNameKey = "DbConnectionName";
             public const string DefaultCustomCookiesExpirationDaysKey = "DefaultCustomCookiesExpirationDays";

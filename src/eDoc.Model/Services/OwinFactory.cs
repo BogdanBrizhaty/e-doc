@@ -7,32 +7,32 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace eDoc.Model.Services
 {
-    public sealed class OwinFactory
+    public sealed class OwinFactory<TContext> where TContext : ApplicationContextBase
     {
-        private string _connStringName;
+        private readonly IDbContextFactory<TContext> _contextFactory;
 
-        public OwinFactory(string connStringName)
+        public OwinFactory(IDbContextFactory<TContext> contextFactory)
         {
-            if (String.IsNullOrEmpty(connStringName))
+            if (contextFactory is null)
                 throw new ArgumentOutOfRangeException("Connection string can not be empty", null as Exception);
-
-            _connStringName = connStringName;
+            _contextFactory = contextFactory;
         }
 
-        public ApplicationContextBase CreateApplicationContext<TContext>() where TContext : ApplicationContextBase
+        public ApplicationContextBase CreateApplicationContext() 
         {
-            return Activator.CreateInstance(typeof(TContext), _connStringName) as ApplicationContextBase;
+            return _contextFactory.Create();
         }
 
         public ApplicationUserManager CreateUserManager(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUserBase>(context.Get<ApplicationContextBase>()));
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUserBase, AppRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context.Get<ApplicationContextBase>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUserBase>(manager)
             {
