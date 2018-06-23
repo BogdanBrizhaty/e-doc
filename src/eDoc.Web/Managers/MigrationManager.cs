@@ -1,10 +1,12 @@
 ﻿using eDoc.Model.Data.Context;
+using eDoc.Model.Data.Entities;
+using eDoc.Model.Managers;
 using eDoc.Web.Base;
 using eDoc.Web.Loader;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Web;
 
 namespace eDoc.Web.Managers
 {
@@ -13,21 +15,65 @@ namespace eDoc.Web.Managers
         public abstract class MigrationBase : IInitializable
         {
             public string Id { get; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+
             public MigrationBase(string key)
             {
                 Id = key;
             }
             public void Execute(ApplicationContextBase contextBase)
             {
-                
-                OnExecute(contextBase);
-                AfterExecute(contextBase);
+                try
+                {
+                    OnExecute(contextBase);
+                    AfterExecute(contextBase);
+                }
+                catch(Exception ex)
+                {
+                    App.OnException(ex, this);
+                }
             }
-            private void AfterExecute(ApplicationContextBase contextBase)
+            protected virtual void AfterExecute(ApplicationContextBase contextBase)
             {
+                contextBase.Set<Migration>().Add(new Migration()
+                {
+                    Id = Id,
+                    DateExecuted = DateTime.UtcNow,
+                    Name = Name,
+                    Description = Description
+                });
                 contextBase.SaveChanges();
             }
             protected abstract void OnExecute(ApplicationContextBase contextBase);
+        }
+
+        public class FileLocatedMigration : MigrationBase
+        {
+            public string FilePath { get; }
+            private TextFileManager _fileManager;
+            public FileLocatedMigration(string key, string fPath, TextFileManager fileManager) : base(key)
+            {
+                if (String.IsNullOrEmpty(fPath))
+                    throw new ArgumentException();
+
+                if (fileManager == null)
+                    throw new ArgumentNullException();
+
+                FilePath = fPath;
+            }
+
+            protected override void OnExecute(ApplicationContextBase contextBase)
+            {
+                // map to server location
+                var command = File.ReadAllText(FilePath);
+                contextBase.Database.ExecuteSqlCommand(command);
+            }
+            protected override void AfterExecute(ApplicationContextBase contextBase)
+            {
+                base.AfterExecute(contextBase);
+                _fileManager = null;
+            }
         }
 
         private ApplicationContextBase _context { get; }
@@ -40,7 +86,8 @@ namespace eDoc.Web.Managers
         {
             try
             {
-                migration.Execute(_context);
+                if (!_context.Set<Migration>().Any(m => m.Id == migration.Id))
+                    migration.Execute(_context);
             }
             catch (Exception ex)
             {

@@ -17,13 +17,13 @@ namespace eDoc.Web
 {
     public partial class Startup
     {
-        private OwinFactory _owinFactory;
-        public OwinFactory OwinFactory
+        private OwinFactory<EDocContext> _owinFactory;
+        public OwinFactory<EDocContext> OwinFactory
         {
             get
             {
                 if (_owinFactory == null)
-                    _owinFactory = DependencyResolver.Current.GetService<OwinFactory>();
+                    _owinFactory = DependencyResolver.Current.GetService<OwinFactory<EDocContext>>();
 
                 return _owinFactory;
             }
@@ -32,7 +32,7 @@ namespace eDoc.Web
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.CreatePerOwinContext(OwinFactory.CreateApplicationContext<EDocContext>);
+            app.CreatePerOwinContext(OwinFactory.CreateApplicationContext);
             app.CreatePerOwinContext<ApplicationUserManager>(OwinFactory.CreateUserManager);
             app.CreatePerOwinContext<SignInManagerBase>(OwinFactory.CreateSignInManager);
 

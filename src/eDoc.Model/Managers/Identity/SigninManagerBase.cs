@@ -19,7 +19,7 @@ namespace eDoc.Model.Managers
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUserBase user)
         {
-            return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
+            return user.GenerateUserIdentityAsync(UserManager);
         }
     }
 }

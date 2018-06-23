@@ -10,6 +10,7 @@ using Ninject.Web.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -31,13 +32,13 @@ namespace eDoc.Web.NInject
             _kernel.Bind<IControllerFactory>().To<DefaultControllerFactory>();
             _kernel.Unbind<ModelValidatorProvider>();
 
-            _kernel.Bind<ApplicationContextBase>()
-                .To<EDocContext>()
-                .WithConstructorArgument("connStringName", App.Settings.ActiveDbConnectionName);
+            _kernel
+                .Bind<IDbContextFactory<EDocContext>>()
+                .To<ContextFactory>()
+                .WithConstructorArgument<string>(App.Settings.ActiveDbConnectionName);
 
-            _kernel.Bind<OwinFactory>()
-                .ToSelf()
-                .WithConstructorArgument("connStringName", App.Settings.ActiveDbConnectionName);
+            _kernel.Bind<OwinFactory<EDocContext>>()
+                .ToSelf();
 
             LoadModules();
         }

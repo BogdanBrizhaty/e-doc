@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace eDoc.Model.Managers
 {
-    public class ApplicationUserManager : UserManager<ApplicationUserBase>
+    public class ApplicationUserManager : UserManager<ApplicationUserBase, string>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUserBase> store)
+        public ApplicationUserManager(IUserStore<ApplicationUserBase, string> store)
             : base(store)
         {
         }
