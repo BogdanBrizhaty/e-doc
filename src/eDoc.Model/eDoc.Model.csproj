@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Common\DataPortion.cs" />
     <Compile Include="Common\Enums\DateTimeUnit.cs" />
+    <Compile Include="Common\Enums\FileOptions.cs" />
     <Compile Include="Data\Context\ApplicationContextBase.cs" />
     <Compile Include="Data\Context\ContextFactory.cs" />
     <Compile Include="Data\Context\eDocContext.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Common\Ordering.cs" />
     <Compile Include="Common\PagingParams.cs" />
     <Compile Include="Managers\ContextState\IContextStateManager.cs" />
+    <Compile Include="Managers\FileManager.cs" />
     <Compile Include="Managers\Identity\ApplicationUserManager.cs" />
     <Compile Include="Managers\Identity\SigninManagerBase.cs" />
     <Compile Include="Managers\IFileManager.cs" />
