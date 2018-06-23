@@ -18,14 +18,15 @@ namespace eDoc.Model.Data.Context
 
             _connectionStringName = connString;
         }
+
         [Obsolete("Use for update-database PMC commands")]
         public ContextFactory()
         {
+            _connectionStringName = ConfigurationSettings.AppSettings["DbConnectionName"];
         }
-        [Obsolete("Use for update-database PMC commands")]
         public EDocContext Create()
         {
-            return new EDocContext(ConfigurationSettings.AppSettings["DbConnectionName"]);
+            return new EDocContext(_connectionStringName);
         }
     }
 }
