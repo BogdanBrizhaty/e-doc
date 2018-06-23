@@ -1,10 +1,10 @@
 ﻿using eDoc.Model.Data.Context;
+using eDoc.Model.Data.Entities;
 using eDoc.Web.Base;
 using eDoc.Web.Loader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace eDoc.Web.Managers
 {
@@ -19,7 +19,7 @@ namespace eDoc.Web.Managers
             }
             public void Execute(ApplicationContextBase contextBase)
             {
-                
+
                 OnExecute(contextBase);
                 AfterExecute(contextBase);
             }
@@ -40,7 +40,8 @@ namespace eDoc.Web.Managers
         {
             try
             {
-                migration.Execute(_context);
+                if (!_context.Set<Migration>().Any(m => m.Id == migration.Id))
+                    migration.Execute(_context);
             }
             catch (Exception ex)
             {
