@@ -22,11 +22,32 @@ namespace eDoc.Model.Data.Repositories.Base
         {
             EntitySet.Add(item);
         }
-        public virtual void Delete(TEntity item) => throw new NotImplementedException();
-        public virtual void Delete(TKey key) => throw new NotImplementedException();
-        public virtual TEntity Get(TKey id) => throw new NotImplementedException();
-        public IQueryable<TEntity> GetAll() => throw new NotImplementedException();
-        public virtual void Update(TEntity item) => throw new NotImplementedException();
-        public IQueryable<TEntity> GetMany(PagingParams pagingParams, Ordering<TEntity> ordering) => throw new NotImplementedException();
+        public virtual void Delete(TEntity item)
+        {
+            EntitySet.Remove(item);
+        }
+        public virtual void Delete(TKey key)
+        {
+            var entity = EntitySet.Find(key);
+            if (entity != null)
+                EntitySet.Remove(entity);
+        }
+        public virtual TEntity Get(TKey id)
+        {
+            return EntitySet.Find(id);
+        }
+        public IQueryable<TEntity> GetAll()
+        {
+            return EntitySet;
+        }
+        public virtual void Update(TEntity item)
+        {
+            Context.Entry<TEntity>(item).State = EntityState.Modified;
+        }
+        public IQueryable<TEntity> GetMany(PagingParams pagingParams, Ordering<TEntity> ordering = null)
+        {
+
+             throw new NotImplementedException();
+        }
     }
 }
