@@ -1,5 +1,6 @@
 ﻿using eDoc.Model.Data.Context;
 using eDoc.Model.Data.Entities;
+using eDoc.Model.Managers;
 using eDoc.Web.Base;
 using eDoc.Web.Loader;
 using System;
@@ -33,7 +34,7 @@ namespace eDoc.Web.Managers
                     App.OnException(ex, this);
                 }
             }
-            private void AfterExecute(ApplicationContextBase contextBase)
+            protected virtual void AfterExecute(ApplicationContextBase contextBase)
             {
                 contextBase.Set<Migration>().Add(new Migration()
                 {
@@ -50,10 +51,14 @@ namespace eDoc.Web.Managers
         public class FileLocatedMigration : MigrationBase
         {
             public string FilePath { get; }
-            public FileLocatedMigration(string key, string fPath) : base(key)
+            private TextFileManager _fileManager;
+            public FileLocatedMigration(string key, string fPath, TextFileManager fileManager) : base(key)
             {
                 if (String.IsNullOrEmpty(fPath))
                     throw new ArgumentException();
+
+                if (fileManager == null)
+                    throw new ArgumentNullException();
 
                 FilePath = fPath;
             }
@@ -63,6 +68,11 @@ namespace eDoc.Web.Managers
                 // map to server location
                 var command = File.ReadAllText(FilePath);
                 contextBase.Database.ExecuteSqlCommand(command);
+            }
+            protected override void AfterExecute(ApplicationContextBase contextBase)
+            {
+                base.AfterExecute(contextBase);
+                _fileManager = null;
             }
         }
 
