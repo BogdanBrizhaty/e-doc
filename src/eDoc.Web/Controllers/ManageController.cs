@@ -8,6 +8,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using eDoc.Web.Models;
 using eDoc.Model.Managers;
+using eDoc.Model.UnitOfWork;
+using AutoMapper;
+using eDoc.Model.Data.Entities;
 
 namespace eDoc.Web.Controllers
 {
@@ -17,8 +20,10 @@ namespace eDoc.Web.Controllers
         private SignInManagerBase _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController()
+        public ManageController(DbUnitOfWork uow, IMapper mapper)
         {
+            _uow = uow;
+            _mapper = mapper;
         }
 
         public ManageController(ApplicationUserManager userManager, SignInManagerBase signInManager)
@@ -53,27 +58,43 @@ namespace eDoc.Web.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        [HttpGet]
+        public ActionResult Index()
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
-
             var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
-            {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
-            };
+            var dbInfo = _uow.UserPersonalInfo.Get(userId);
+
+            var model = _mapper.Map<UserInfoModel>(dbInfo);
+
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ChangePersonalInfo(UserInfoModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Index", model);
+            }
+
+            var dbEntry = _uow.UserPersonalInfo.Get(User.Identity.GetUserId());
+            if (dbEntry == null)
+                return HttpNotFound();
+
+            dbEntry.ContactEmail = model.ContactEmail;
+            dbEntry.CellPhone = model.CellPhone;
+
+            dbEntry.BirthDate = model.BirthDate;
+            dbEntry.CurrentAddress = model.CurrentAddress;
+            dbEntry.RegistrationAddress = model.RegistrationAddress;
+            dbEntry.FirstName = model.FirstName;
+            dbEntry.LastName = model.LastName;
+            dbEntry.Patronymic = model.Patronymic;
+
+            _uow.UserPersonalInfo.Update(dbEntry);
+            _uow.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         //
@@ -337,6 +358,8 @@ namespace eDoc.Web.Controllers
 #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+        private readonly DbUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
         private IAuthenticationManager AuthenticationManager
         {

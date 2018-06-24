@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace eDoc.Model.Data.Repositories.Base
 {
-    public abstract class EfRepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IDbEntity<TKey>
+    public abstract class EfRepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IDbEntity<TKey> where TKey : class
     {
         protected ApplicationContextBase Context { get; }
         protected bool PermanentDelete { get; }
@@ -50,7 +50,7 @@ namespace eDoc.Model.Data.Repositories.Base
         }
         public virtual TEntity Get(TKey id)
         {
-            return EntitySet.FirstOrDefault(i => !i.IsDeleted && i.Id.Equals(id));
+            return EntitySet.FirstOrDefault(i => !i.IsDeleted && i.Id == id);
         }
         public IQueryable<TEntity> GetAll()
         {
