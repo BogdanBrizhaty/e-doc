@@ -11,6 +11,7 @@ namespace eDoc.Model.Data.Context
     public class EDocContext : ApplicationContextBase
     {
         public DbSet<Migration> ThirdPartyMigrationHistory { get; set; }
+        public DbSet<UserPersonalInfo> UserPersonalInfoes { get; set; }
         public EDocContext(string connStringName) : base(connStringName)
         {
         }

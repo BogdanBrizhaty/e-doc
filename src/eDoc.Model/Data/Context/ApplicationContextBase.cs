@@ -1,4 +1,5 @@
-﻿using eDoc.Model.Data.Entities;
+﻿using eDoc.Model.Common.Enums;
+using eDoc.Model.Data.Entities;
 using eDoc.Model.Managers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -13,8 +14,14 @@ namespace eDoc.Model.Data.Context
 {
     public abstract class ApplicationContextBase : IdentityDbContext<ApplicationUserBase, AppRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
     {
+        public ContextDeleteOption OnDelete { get; }
         public ApplicationContextBase(string connStringName)
-            :base(connStringName)
+            : this(connStringName, ContextDeleteOption.MarkAsDeleted)
+        {
+
+        }
+        public ApplicationContextBase(string connStringName, ContextDeleteOption onDelete)
+            : base(connStringName)
         {
 
         }

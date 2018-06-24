@@ -57,16 +57,14 @@ namespace eDoc.Web.Managers
                 if (String.IsNullOrEmpty(fPath))
                     throw new ArgumentException();
 
-                if (fileManager == null)
-                    throw new ArgumentNullException();
-
+                _fileManager = fileManager ?? throw new ArgumentNullException();
                 FilePath = fPath;
             }
 
-            protected override void OnExecute(ApplicationContextBase contextBase)
+            protected async override void OnExecute(ApplicationContextBase contextBase)
             {
                 // map to server location
-                var command = File.ReadAllText(FilePath);
+                var command = await _fileManager.GetContent(FilePath);
                 contextBase.Database.ExecuteSqlCommand(command);
             }
             protected override void AfterExecute(ApplicationContextBase contextBase)
