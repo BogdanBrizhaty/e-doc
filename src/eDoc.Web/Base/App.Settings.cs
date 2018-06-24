@@ -22,6 +22,8 @@ namespace eDoc.Web.Base
 
             public string AppHost => _appSettings[AppSettingsKeys.AppHostKey];
             public string AppName => _appSettings[AppSettingsKeys.AppNameKey];
+            public string AppDeveloperName => "Bogdan Brizhaty";
+            public string AppDeveloperInfo => "Lviv Polytechnic National University, PZ-21";
             public string ActiveDbConnectionName => _appSettings[AppSettingsKeys.DbConnectionNameKey];
             public int DefaultCustomCookiesExpirationDays => _appSettings[AppSettingsKeys.DefaultCustomCookiesExpirationDaysKey] == null
                 ? 1

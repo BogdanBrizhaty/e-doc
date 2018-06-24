@@ -21,10 +21,10 @@ namespace eDoc.Web.Controllers
 
         public ActionResult Index(bool force = false)
         {
-            var cookie = _contextState.GetItem("test-key");
-            if (cookie != null && cookie.Equals("lol kek"))
-                return RedirectToAction("About");
-            _contextState.AddOrUpdateItem("test-key", "lol kek");
+            //var cookie = _contextState.GetItem("test-key");
+            //if (cookie != null && cookie.Equals("lol kek"))
+            //    return RedirectToAction("About");
+            //_contextState.AddOrUpdateItem("test-key", "lol kek");
             return View();
         }
 

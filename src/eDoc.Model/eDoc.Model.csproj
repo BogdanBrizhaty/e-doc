@@ -75,16 +75,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DataPortion.cs" />
+    <Compile Include="Common\Enums\ContextDeleteOption.cs" />
     <Compile Include="Common\Enums\DateTimeUnit.cs" />
     <Compile Include="Common\Enums\FileOptions.cs" />
+    <Compile Include="Common\Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Data\Context\ApplicationContextBase.cs" />
     <Compile Include="Data\Context\ContextFactory.cs" />
     <Compile Include="Data\Context\eDocContext.cs" />
     <Compile Include="Data\Entities\ApplicationUserBase.cs" />
     <Compile Include="Data\Entities\AppRole.cs" />
+    <Compile Include="Data\Entities\DbEntityBase.cs" />
+    <Compile Include="Data\Entities\IDbEntity.cs" />
     <Compile Include="Data\Entities\Migration.cs" />
+    <Compile Include="Data\Entities\UserPersonalInfo.cs" />
     <Compile Include="Data\Repositories\Base\EfRepostitoryBase.cs" />
     <Compile Include="Data\Repositories\Base\IRepository.cs" />
+    <Compile Include="Data\Repositories\PersonalUserInfoRepository.cs" />
+    <Compile Include="Data\UserPhoneNumber.cs" />
     <Compile Include="Extensions\DateTimeExt.cs" />
     <Compile Include="Common\Ordering.cs" />
     <Compile Include="Common\PagingParams.cs" />
@@ -109,6 +116,14 @@
     <Compile Include="Migrations\201806230003074_AppRole_Added.Designer.cs">
       <DependentUpon>201806230003074_AppRole_Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806241441174_baseDbType_and_AppUser_and_PersonalInfo_added.cs" />
+    <Compile Include="Migrations\201806241441174_baseDbType_and_AppUser_and_PersonalInfo_added.Designer.cs">
+      <DependentUpon>201806241441174_baseDbType_and_AppUser_and_PersonalInfo_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806241544152_UserInfo_changed.cs" />
+    <Compile Include="Migrations\201806241544152_UserInfo_changed.Designer.cs">
+      <DependentUpon>201806241544152_UserInfo_changed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\OwinFactory.cs" />
@@ -125,7 +140,6 @@
     <Folder Include="Common\Constants\" />
     <Folder Include="Data\Entities\Extensions\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201806222024410_Initial_aspnet_identity.resx">
@@ -139,6 +153,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806230003074_AppRole_Added.resx">
       <DependentUpon>201806230003074_AppRole_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806241441174_baseDbType_and_AppUser_and_PersonalInfo_added.resx">
+      <DependentUpon>201806241441174_baseDbType_and_AppUser_and_PersonalInfo_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806241544152_UserInfo_changed.resx">
+      <DependentUpon>201806241544152_UserInfo_changed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

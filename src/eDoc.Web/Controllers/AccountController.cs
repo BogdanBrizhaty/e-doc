@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using eDoc.Web.Models;
 using eDoc.Model.Data.Entities;
 using eDoc.Model.Managers;
+using eDoc.Model.UnitOfWork;
 
 namespace eDoc.Web.Controllers
 {
@@ -20,8 +21,9 @@ namespace eDoc.Web.Controllers
         private SignInManagerBase _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
+        public AccountController(DbUnitOfWork uow)
         {
+            _uow = uow;
         }
 
         public AccountController(ApplicationUserManager userManager, SignInManagerBase signInManager )
@@ -153,10 +155,20 @@ namespace eDoc.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUserBase { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUserBase
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    CreationDate = DateTime.UtcNow,
+                    LastModifiedDate = DateTime.UtcNow,
+                    LastVisitedDate = DateTime.UtcNow
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var newUserInfo = new UserPersonalInfo() { Id = user.Id, ContactEmail = model.Email };
+                    _uow.UserPersonalInfo.Add(newUserInfo);
+                    await _uow.SaveChangesAsync();
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -428,6 +440,7 @@ namespace eDoc.Web.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+        private readonly DbUnitOfWork _uow;
 
         private IAuthenticationManager AuthenticationManager
         {

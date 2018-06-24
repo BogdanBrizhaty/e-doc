@@ -217,7 +217,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="AutoMapper\ProfileBase.cs" />
-    <Compile Include="AutoMapper\Profiles\TestProfile.cs" />
+    <Compile Include="AutoMapper\Profiles\AccountMappingProfile.cs" />
     <Compile Include="Base\App.Settings.cs" />
     <Compile Include="Base\App.Base.cs" />
     <Compile Include="Common\Exceptions\AppAlreadyInitializedException.cs" />
@@ -239,6 +239,7 @@
     <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UserInfoViewModel.cs" />
     <Compile Include="NInject\Modules\AutoMapperModule.cs" />
     <Compile Include="NInject\NInjectDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace eDoc.Model.Data.Entities
 {
-    public class ApplicationUserBase : IdentityUser
+    public class ApplicationUserBase : IdentityUser, IDbEntity<string>
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUserBase, string> manager)
         {
@@ -18,5 +18,14 @@ namespace eDoc.Model.Data.Entities
             // Add custom user claims here
             return userIdentity;
         }
+        
+        public DateTime CreationDate { get; set; }
+        public DateTime LastModifiedDate { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public DateTime LastVisitedDate { get; set; }
+
+        public virtual UserPersonalInfo PersonalInfo { get; set; }
+
     }
 }

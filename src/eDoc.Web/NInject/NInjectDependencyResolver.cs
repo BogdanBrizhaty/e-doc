@@ -1,6 +1,7 @@
 ﻿using eDoc.Model.Data.Context;
 using eDoc.Model.Managers;
 using eDoc.Model.Services;
+using eDoc.Model.UnitOfWork;
 using eDoc.Web.Base;
 using eDoc.Web.Loader;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -30,7 +31,7 @@ namespace eDoc.Web.NInject
             _kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
             _kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
             _kernel.Bind<IControllerFactory>().To<DefaultControllerFactory>();
-            _kernel.Unbind<ModelValidatorProvider>();
+            //_kernel.Unbind<ModelValidatorProvider>();
 
             _kernel
                 .Bind<IDbContextFactory<EDocContext>>()
@@ -39,6 +40,8 @@ namespace eDoc.Web.NInject
 
             _kernel.Bind<OwinFactory<EDocContext>>()
                 .ToSelf();
+            _kernel.Bind<DbUnitOfWork>().ToConstructor(ctor => 
+                new DbUnitOfWork(GetService(typeof(IDbContextFactory<EDocContext>)) as IDbContextFactory<EDocContext>));
 
             LoadModules();
         }

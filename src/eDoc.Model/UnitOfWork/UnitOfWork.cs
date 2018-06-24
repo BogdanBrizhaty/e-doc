@@ -1,6 +1,8 @@
 ﻿using eDoc.Model.Data.Context;
+using eDoc.Model.Data.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +17,11 @@ namespace eDoc.Model.UnitOfWork
         [Obsolete("For moq only")]
         public DbUnitOfWork() { }
 
-        public DbUnitOfWork(ApplicationContextBase applicationContext) => Context = applicationContext;
+        public DbUnitOfWork(IDbContextFactory<ApplicationContextBase> contextFactory)
+        {
+            Context = contextFactory.Create();
+            InitializeRepositories();
+        }
 
         #endregion
 
@@ -27,8 +33,13 @@ namespace eDoc.Model.UnitOfWork
 
         #region Repositories
 
-
+        public PersonalUserInfoRepository UserPersonalInfo { get; set; }
 
         #endregion
+
+        private void InitializeRepositories()
+        {
+            UserPersonalInfo = new PersonalUserInfoRepository(Context);
+        }
     }
 }
