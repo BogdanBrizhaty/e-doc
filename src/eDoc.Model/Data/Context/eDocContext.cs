@@ -12,6 +12,9 @@ namespace eDoc.Model.Data.Context
     {
         public DbSet<Migration> ThirdPartyMigrationHistory { get; set; }
         public DbSet<UserPersonalInfo> UserPersonalInfoes { get; set; }
+        public DbSet<Disease> Diseases { get; set; }
+        public DbSet<Sympthome> Sympthomes { get; set; }
+        public DbSet<DiseaseSympthomeMapping> DiseaseSympthomeMappings { get; set; }
         public EDocContext(string connStringName) : base(connStringName)
         {
         }
