@@ -238,6 +238,7 @@
     <Compile Include="Managers\MigrationManager.cs" />
     <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Home\LatestBlogsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserInfoViewModel.cs" />
     <Compile Include="NInject\Modules\AutoMapperModule.cs" />
@@ -252,7 +253,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\12-50-secrets-hospitals-our-human-side2.jpg" />
     <Content Include="Content\img\12-50-secrets-hospitals-our-human-side_560.jpg" />
+    <Content Include="Content\img\if_boy_403024.png" />
     <Content Include="Content\img\logo-hospital.png" />
+    <Content Include="Content\img\male3-512.png" />
+    <Content Include="Content\img\new-logo.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

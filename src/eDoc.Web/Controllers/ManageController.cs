@@ -90,10 +90,20 @@ namespace eDoc.Web.Controllers
             dbEntry.FirstName = model.FirstName;
             dbEntry.LastName = model.LastName;
             dbEntry.Patronymic = model.Patronymic;
+            dbEntry.AllowToCall = model.AllowToCall;
+            dbEntry.AllowToSMS = model.AllowToSMS;
+            dbEntry.AllowEmailingMe = model.AllowEmailingMe;
 
             _uow.UserPersonalInfo.Update(dbEntry);
             _uow.SaveChanges();
 
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ChangePhoto(HttpPostedFileBase[] ImageFile)
+        {
+            // todo: save
             return RedirectToAction("Index");
         }
 

@@ -27,7 +27,11 @@ namespace eDoc.Model.Data.Entities
 
         public string CellPhone { get; set; }
         public string ContactEmail { get; set; }
-        
+
+        public bool AllowToCall { get; set; } = false;
+        public bool AllowToSMS { get; set; } = true;
+        public bool AllowEmailingMe { get; set; } = true;
+
 
         // link to Application user main entry
         public virtual ApplicationUserBase AppUser { get; set; }

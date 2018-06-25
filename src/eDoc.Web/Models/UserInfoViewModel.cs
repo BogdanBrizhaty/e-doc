@@ -6,7 +6,7 @@ using System.Web;
 
 namespace eDoc.Web.Models
 {
-    public class UserInfoModel : IValidatableObject
+    public class UserInfoModel
     {
         [Required]
         [MinLength(4)]
@@ -45,15 +45,20 @@ namespace eDoc.Web.Models
         [Display(Name = "Дата реєстрації")]
         public DateTime CreationDate { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>();
-            var model = validationContext.ObjectInstance as UserInfoModel;
-            if (model != null)
-            {
-                //if (model.FirstName)
-            }
-            return result;
-        }
+        [Display(Name = "Дозволити дзвінки")]
+        public bool AllowToCall { get; set; }
+
+        [Display(Name = "Дозволити отримувати СМС сповіщення")]
+        public bool AllowToSMS { get; set; }
+
+        [Display(Name = "Дозволити електронні повідомлення")]
+        public bool AllowEmailingMe { get; set; }
+
+        public string FilePath { get; set; } = "/Resources/Images/Defaults/default-avatar-doc.jpg";
+    }
+
+    public class ImageUploadModel
+    {
+        HttpPostedFileBase ImageFile { get; set; }
     }
 }

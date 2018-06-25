@@ -1,10 +1,13 @@
-﻿@{
+﻿@using eDoc.Web.Models.Home
+@{
     ViewBag.Title = "Головна";
     var appName = eDoc.Web.Base.App.Settings.AppName;
     var amount = "NNN";
     var descr = $"Це потужний інструмент для роботи з пацієнтами та лікарями<br/>Зручний сервіс та висока якість - доступні кожному.";
-    descr = $"Нас обрало вже {{{amount}}} людей в Україні!";
+    descr += $"<br/><br/>Нас обрало вже {{{amount}}} людей в Україні!";
 }
+
+@model LatestBlogsViewModel
 <style>
     .content-container {
         position: relative;
@@ -81,7 +84,6 @@
 
     .blog-section {
         background-color: greenyellow;
-        height: 300px;
     }
 
     .contacts-section {
@@ -95,7 +97,7 @@
 
     .go-up {
         position: fixed;
-        /*left: -40px;*/
+        left: 20px;
         bottom: 0;
         color: white;
         width: 100px;
@@ -121,6 +123,7 @@
         font-size: 25pt;
         color: #3d3d3d;
     }
+
     .you-are {
         font-weight: 500;
         font-size: 25pt;
@@ -131,11 +134,13 @@
         margin-top: 25px;
         margin-left: calc(50% - 50px);
     }
+
     .branding-descr {
         font-weight: 400;
         font-size: 12pt;
         color: #3d3d3d;
     }
+
     .logo-hospital {
         position: absolute;
         top: 10px;
@@ -143,19 +148,20 @@
         width: 128px;
         left: 100px;
         background: center no-repeat;
-        background-image: url('../../Content/img/logo-hospital.png');
+        /*background-image: url('');*/
+        /*background-image: url('../../Content/img/logo-hospital.png');*/
     }
 </style>
 <div id="main-content-holder">
     <section id="home">
         <div class="row header">
-            <div class="logo-hospital"></div>
-            <div class="row branding-title text-center">@appName - якість, якій можна довіряти</div>
-            <div class="row branding-descr text-center">@Html.Raw(descr)</div>
+            <div class="logo-hospital"><img src="../../Content/img/new-logo.png" height="128" width="128" /></div>
+            <div style=color: black;" class="row branding-title text-center">@appName - якість, якій можна довіряти</div>
+            <div style=color: black;" class="row branding-descr text-center">@Html.Raw(descr)</div>
         </div>
         <div class="row home-menu text-center">
             <a href="#home" class="menu-option">Головна</a>
-            <a href="#services" class="menu-option">Про нас</a>
+            <a href="#services" class="menu-option">Наші послуги</a>
             <a href="#blog" class="menu-option">Блог</a>
             <a href="#contacts" class="menu-option">Контакти</a>
         </div>
@@ -168,7 +174,7 @@
             <div class="clickable-container" style="position:absolute; top: 0; left: 0; width: 100%; height: 560px;">
                 <div id="clickable-left" style="color: white; font-size: 36pt; font-weight: 500; opacity: 0.75; " class="half-clickable-link">
                     <div style="margin-top: 375px; width: 250px; float: left;">Пацієнт</div>
-                </div>           
+                </div>
                 <div id="clickable-right" style="color: white; font-size: 36pt; font-weight: 500; opacity: 0.75; " class="half-clickable-link">
                     <div style="margin-top: 375px; width: 250px; float: right;">Лікар</div>
                 </div>
@@ -178,7 +184,7 @@
             <div class="row block-scope">
                 @*blocks*@
                 <div class="row" style="position: relative; background: green; height: 250px">
-                    <div id="cell00" style="width: 250px; top: 0; left: 0; position: absolute; height: 250px; background-color: chartreuse;">
+                    <div id="cell00" style="width: 250px; top: 0; left: 0; position: absolute; height: 250px; background-color: brown;">
                         @*<div class="front" style="background-color: white;"></div>
                             <div class="back" style="background-color: red;"></div>*@
                     </div>
@@ -199,20 +205,46 @@
         </section>
     </div>
     <section id="blog">
-        <div class="row blog-section">
-            &nbsp;
+        <div class="row blog-section" style="background-color: whitesmoke;">
+            @foreach (var pst in Model.Blogs)
+            {
+                <div class="col-md-4 col-sm-12 col-xs-12" style="padding: 5px 15px;">
+                    <div class="col-md-2 col-sm-1 col-xs-2"><img src="@pst.Avatar" height="64" width="64" /></div>
+                    <div class="col-md-10 col-sm-11 col-xs-10" style="float: left">
+                        <div class="col-md-12 " style="font-size: 20pt; font-weight: 400; overflow: hidden; text-overflow: ellipsis; height: 35px; white-space: nowrap; ">
+                            @pst.Title
+                        </div>
+                        <div class="col-md-12" style="font-size: 10pt; color: darkgray"><a href="#blogs">@pst.Author</a>, @pst.CreationDate.ToLongDateString()</div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12" style="font-size: 12pt; height: 180px; text-overflow: ellipsis; overflow-y: hidden;">@pst.Content</div>
+                    <div class="col-md-12 col-sm-12 col-xs-12" style="font-size: 12pt;"><a href="#blogs">Читати далі...</a></div>
+                    <hr />
+                </div>
+            }
         </div>
     </section>
     <section id="contacts">
         <div class="row contacts-section">
-            &nbsp;
+            <div class="col-md-5 col-md-offset-1">
+                <div id="map_canvas" style="width: 100%; height: 500px;"></div>
+            </div>
+            <div class="col-md-6" style="background-color: white; height: 300px;">
+                <h3>Контактна інформація</h3>
+                <hr />
+                <h4 style="color: #3d3d3d">Наші телефони: 123456789, 987654321 [8:00-20:00 Mn-Fd]</h4>
+                <h4 style="color: #3d3d3d">Наш імейл: <a href="mailto:dev@e-doc.domain">dev@e-doc.domain</a></h4>
+                <hr />
+                <h4 style="color: #3d3d3d">Наша адреса: Улица Пушкина, Дом Колотушкина ;)</h4>
+            </div>
         </div>
     </section>
 </div>
 <a href="#home" class="go-up text-center">
     <div style="margin: 10px; font-size: 14pt;">Go up!</div>
 </a>
-
+<script type="text/javascript"
+        src="http://maps.googleapis.com/maps/api/js?sensor=false">
+</script>
 <script>
     $('#clickable-left').mouseover(function () {
         $('#clickable-left-target').css('background-color', 'transparent');
@@ -232,4 +264,24 @@
     $('#cell00').click(function () {
         $(this).flip();
     })
+
+    var parliament = new google.maps.LatLng(59.327383, 18.06747);
+    var marker;
+
+    function initialize() {
+        var myOptions = {
+            zoom: 12,
+            center: parliament,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+            myOptions);
+
+        var marker = new google.maps.Marker({
+            position: parliament,
+            map: map,
+            title: "Hello World!"
+        });
+    }
+    initialize();
 </script>
