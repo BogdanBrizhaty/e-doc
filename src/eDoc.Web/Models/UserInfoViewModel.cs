@@ -54,11 +54,8 @@ namespace eDoc.Web.Models
         [Display(Name = "Дозволити електронні повідомлення")]
         public bool AllowEmailingMe { get; set; }
 
-        public string FilePath { get; set; } = "/Resources/Images/Defaults/default-avatar-doc.jpg";
+        public string AvatarPath { get; set; } = "/Resources/Images/Defaults/default-avatar-doc.jpg";
+        public string AvatarThumbnailPath { get; set; } = "/Resources/Images/Defaults/default-avatar-doc.jpg";
     }
 
-    public class ImageUploadModel
-    {
-        HttpPostedFileBase ImageFile { get; set; }
-    }
 }

@@ -22,6 +22,7 @@ namespace eDoc.Web.Base
 
             public string AppHost => _appSettings[AppSettingsKeys.AppHostKey];
             public string AppName => _appSettings[AppSettingsKeys.AppNameKey];
+            public string ImageFolderLocation => _appSettings[AppSettingsKeys.ImageFolderLocationKey];
             public string AppDeveloperName => "Bogdan Brizhaty";
             public string AppDeveloperInfo => "Lviv Polytechnic National University, PZ-21";
             public string ActiveDbConnectionName => _appSettings[AppSettingsKeys.DbConnectionNameKey];
@@ -32,6 +33,7 @@ namespace eDoc.Web.Base
         private static class AppSettingsKeys
         {
             public const string AppNameKey = "AppName";
+            public const string ImageFolderLocationKey = "ImagesFolderLocation";
             public const string AppHostKey = "AppHost";
             public const string DbConnectionNameKey = "DbConnectionName";
             public const string DefaultCustomCookiesExpirationDaysKey = "DefaultCustomCookiesExpirationDays";

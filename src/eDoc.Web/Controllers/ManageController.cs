@@ -11,6 +11,11 @@ using eDoc.Model.Managers;
 using eDoc.Model.UnitOfWork;
 using AutoMapper;
 using eDoc.Model.Data.Entities;
+using System.Drawing;
+using System.IO;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using eDoc.Web.Base;
 
 namespace eDoc.Web.Controllers
 {
@@ -38,9 +43,9 @@ namespace eDoc.Web.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<SignInManagerBase>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -65,6 +70,9 @@ namespace eDoc.Web.Controllers
             var dbInfo = _uow.UserPersonalInfo.Get(userId);
 
             var model = _mapper.Map<UserInfoModel>(dbInfo);
+            var dbUser = _uow.UserRepository.Get(User.Identity.GetUserId());
+            model.AvatarPath = App.Settings.AppHost + dbUser.AvatarPath;
+            model.AvatarThumbnailPath = App.Settings.AppHost + dbUser.AvatarThumbnailPath;
 
             return View(model);
         }
@@ -101,9 +109,52 @@ namespace eDoc.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ChangePhoto(HttpPostedFileBase[] ImageFile)
+        public ActionResult ChangePhoto(HttpPostedFileBase[] ImageFile)
         {
-            // todo: save
+            // todo: make resize
+            if (ImageFile != null && ImageFile.Any())
+            {
+                var file = ImageFile.FirstOrDefault();
+                string ext = file.FileName.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+                string name = Guid.NewGuid().ToString();
+                string fileName = $"{name}.{ext}";
+                string thumbnailFileName = $"{name}-thumb.png";
+                string relativePath = $"~/{App.Settings.ImageFolderLocation}/Images/Avatars";
+                string imgPath = Path.Combine(relativePath, fileName);
+                string fullPath = Path.Combine(Server.MapPath(relativePath), fileName);
+                if (!String.IsNullOrEmpty(ext))
+                {
+                    file.SaveAs(Server.MapPath(imgPath));
+                    
+                    try
+                    {
+                        using (var srcImage = Image.FromFile(fullPath))
+                        using (var thumbnail = new Bitmap(100, 100))
+                        using (var graphics = Graphics.FromImage(thumbnail))
+                        using (var stream = new MemoryStream())
+                        {
+                            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                            graphics.DrawImage(srcImage, new Rectangle(0, 0, 100, 100));
+                            thumbnail.Save(Path.Combine(Server.MapPath(relativePath), thumbnailFileName), ImageFormat.Png);
+                            
+                            var curUser = _uow.UserRepository.Get(User.Identity.GetUserId());
+                            if (curUser == null)
+                                throw new Exception("Unexpected exception on User");
+
+                            curUser.AvatarPath = imgPath.Replace("~", "");
+                            curUser.AvatarThumbnailPath = Path.Combine(relativePath, thumbnailFileName).Replace("~", "");
+                            _uow.SaveChanges();
+                        }
+                        //var curUser = _uow
+                    }
+                    catch (Exception ex)
+                    {
+                        App.OnException(ex, this);
+                    }
+                }
+            }
             return RedirectToAction("Index");
         }
 
@@ -365,7 +416,7 @@ namespace eDoc.Web.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
         private readonly DbUnitOfWork _uow;
@@ -418,6 +469,6 @@ namespace eDoc.Web.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

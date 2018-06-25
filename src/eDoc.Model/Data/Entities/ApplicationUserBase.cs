@@ -25,6 +25,10 @@ namespace eDoc.Model.Data.Entities
 
         public DateTime LastVisitedDate { get; set; }
 
+        public string AvatarPath { get; set; }
+        public string AvatarThumbnailPath { get; set; }
+
+
         public virtual UserPersonalInfo PersonalInfo { get; set; }
 
     }

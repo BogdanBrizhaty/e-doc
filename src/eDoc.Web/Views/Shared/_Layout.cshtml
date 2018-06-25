@@ -1,4 +1,7 @@
 ﻿@using AppCfg = eDoc.Web.Base.App
+@{ 
+    var showBar = ViewBag.ShowTopBar ?? false;
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +14,7 @@
     @Scripts.Render("~/bundles/bootstrap")
 </head>
 <body @(Html.Raw(Request.IsAuthenticated ? "" : "style='padding-top: 0'"))>
-    @if (Request.IsAuthenticated)
+    @if (showBar)
     {
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">

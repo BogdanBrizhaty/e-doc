@@ -34,12 +34,14 @@ namespace eDoc.Model.UnitOfWork
         #region Repositories
 
         public PersonalUserInfoRepository UserPersonalInfo { get; set; }
+        public AppUserRepository UserRepository { get; set; }
 
         #endregion
 
         private void InitializeRepositories()
         {
             UserPersonalInfo = new PersonalUserInfoRepository(Context);
+            UserRepository = new AppUserRepository(Context);
         }
     }
 }
