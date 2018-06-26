@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Constants\DataConstants.cs" />
     <Compile Include="Common\DataPortion.cs" />
     <Compile Include="Common\Enums\ContextDeleteOption.cs" />
     <Compile Include="Common\Enums\DateTimeUnit.cs" />
@@ -153,7 +154,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\Constants\" />
     <Folder Include="Data\Entities\Extensions\" />
     <Folder Include="Helpers\" />
   </ItemGroup>

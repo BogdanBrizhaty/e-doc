@@ -111,7 +111,7 @@ namespace eDoc.Web.Controllers
         [HttpPost]
         public ActionResult ChangePhoto(HttpPostedFileBase[] ImageFile)
         {
-            // todo: make resize
+            // todo: maintain aspect ratio
             if (ImageFile != null && ImageFile.Any())
             {
                 var file = ImageFile.FirstOrDefault();

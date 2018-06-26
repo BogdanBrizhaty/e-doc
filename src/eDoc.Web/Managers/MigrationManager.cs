@@ -18,6 +18,8 @@ namespace eDoc.Web.Managers
             public string Name { get; set; }
             public string Description { get; set; }
 
+            protected readonly DateTime UtcExecutionTime = DateTime.UtcNow;
+
             public MigrationBase(string key)
             {
                 Id = key;

@@ -206,6 +206,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Data\Migrations\EF\SeedTestProfiles.cs" />
+    <Compile Include="App_Data\Migrations\EF\SeedDiseasesAndSympthomesMigration.cs" />
     <Compile Include="App_Data\Migrations\Sql\TruncateRolesTableMigration.cs" />
     <Compile Include="App_Data\Migrations\EF\SeedRolesMigration.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
