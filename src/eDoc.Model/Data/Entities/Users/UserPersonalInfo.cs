@@ -35,5 +35,7 @@ namespace eDoc.Model.Data.Entities
 
         // link to Application user main entry
         public virtual ApplicationUserBase AppUser { get; set; }
+
+        public virtual ICollection<Patient> Patients { get; set; }
     }
 }
