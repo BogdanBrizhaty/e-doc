@@ -13,5 +13,6 @@ namespace eDoc.Model.Data.Entities
         public string Description { get; set; }
 
         public virtual ICollection<DiseaseSympthomeMapping> SympthomeMappings { get; set; }
+        public virtual ICollection<DiseaseComplaint> DiseaseComplaints { get; set; }
     }
 }

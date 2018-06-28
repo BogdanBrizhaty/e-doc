@@ -42,8 +42,8 @@ namespace eDoc.Web.Managers
                 {
                     Id = Id,
                     DateExecuted = DateTime.UtcNow,
-                    Name = Name,
-                    Description = Description
+                    Name = Name ?? this.GetType().Name,
+                    Description = Description ?? this.Name
                 });
                 contextBase.SaveChanges();
             }

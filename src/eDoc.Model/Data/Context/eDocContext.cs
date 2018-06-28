@@ -31,6 +31,10 @@ namespace eDoc.Model.Data.Context
         public DbSet<MedicalTestResult> MedicalTestResults { get; set; }
         public DbSet<MedicalTestReferral> MedicalTestReferrals { get; set; }
 
+        // medical records
+        public DbSet<CommonMedicalRecord> MedicalRecords { get; set; }
+        public DbSet<DiseaseComplaint> DiseaseComplaints { get; set; }
+
         public EDocContext(string connStringName) : base(connStringName)
         {
         }

@@ -16,5 +16,6 @@ namespace eDoc.Model.Data.Entities
         //International Classification of Diseases and Related Health Problems
 
         public virtual ICollection<DiseaseSympthomeMapping> SympthomeMappings { get; set; }
+        public virtual ICollection<CommonMedicalRecord> MedicalRecords { get; set; }
     }
 }
