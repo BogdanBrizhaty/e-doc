@@ -206,6 +206,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Data\Migrations\EF\SeedContingents.cs" />
     <Compile Include="App_Data\Migrations\EF\SeedTestProfiles.cs" />
     <Compile Include="App_Data\Migrations\EF\SeedDiseasesAndSympthomesMigration.cs" />
     <Compile Include="App_Data\Migrations\Sql\TruncateRolesTableMigration.cs" />
