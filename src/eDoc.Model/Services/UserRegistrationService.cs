@@ -1,4 +1,5 @@
-﻿using eDoc.Model.Common.Enums;
+﻿using eDoc.Model.Common.Constants;
+using eDoc.Model.Common.Enums;
 using eDoc.Model.Data.Entities;
 using eDoc.Model.Managers;
 using eDoc.Model.UnitOfWork;
@@ -30,6 +31,10 @@ namespace eDoc.Model.Services
                 UserPersonalInfoId = wrapper.Info.Id,
                 Bio = "Your bio here..."
             };
+            var dbUser = _uow.Users.Get(wrapper.Info.Id);
+            dbUser.AvatarPath = DataConstants.Defaults.DocAvatarPath;
+            dbUser.AvatarThumbnailPath = DataConstants.Defaults.DocAvatarThumbnailPath;
+            _uow.Users.Update(dbUser);
             _uow.Doctors.Add(doctor);
             await _uow.SaveChangesAsync();
             return wrapper.Account;
@@ -43,6 +48,10 @@ namespace eDoc.Model.Services
                 UserPersonalInfoId = wrapper.Info.Id,
                 LastVisit = null
             };
+            var dbUser = _uow.Users.Get(wrapper.Info.Id);
+            dbUser.AvatarPath = DataConstants.Defaults.PatientAvatarPath;
+            dbUser.AvatarThumbnailPath = DataConstants.Defaults.PatientAvatarThumbnailPath;
+            _uow.Users.Update(dbUser);
             _uow.Patients.Add(patient);
             await _uow.SaveChangesAsync();
             return wrapper.Account;
@@ -56,9 +65,7 @@ namespace eDoc.Model.Services
                 Email = email,
                 CreationDate = _utcExectionTime,
                 LastModifiedDate = _utcExectionTime,
-                LastVisitedDate = _utcExectionTime,
-                AvatarPath = @"//Resources//Images/Defaults\default-avatar-doc.jpg", // todo: move to constant or cfg
-                AvatarThumbnailPath = @"//Resources//Images/Defaults\default-avatar-doc.jpg",
+                LastVisitedDate = _utcExectionTime
             };
             if ((await _userManager.CreateAsync(user, password)).Succeeded)
             {

@@ -37,5 +37,6 @@ namespace eDoc.Model.Data.Entities
         public virtual ApplicationUserBase AppUser { get; set; }
 
         public virtual ICollection<Patient> Patients { get; set; }
+        public virtual ICollection<Doctor> Doctors { get; set; }
     }
 }

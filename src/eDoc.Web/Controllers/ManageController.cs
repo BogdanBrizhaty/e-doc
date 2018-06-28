@@ -20,21 +20,14 @@ using eDoc.Web.Base;
 namespace eDoc.Web.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : Base.ControllerBase
     {
         private SignInManagerBase _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController(DbUnitOfWork uow, IMapper mapper)
+        public ManageController()
         {
-            _uow = uow;
-            _mapper = mapper;
-        }
 
-        public ManageController(ApplicationUserManager userManager, SignInManagerBase signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
         }
 
         public SignInManagerBase SignInManager
@@ -67,13 +60,23 @@ namespace eDoc.Web.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var dbInfo = _uow.UserPersonalInfo.Get(userId);
+            var dbUser = UnitOfWork.Users.Get(userId);
+            var dbInfo = UnitOfWork.UserPersonalInfo.Get(userId);
 
-            var model = _mapper.Map<UserInfoModel>(dbInfo);
-            var dbUser = _uow.Users.Get(User.Identity.GetUserId());
-            model.AvatarPath = App.Settings.AppHost + dbUser.AvatarPath;
-            model.AvatarThumbnailPath = App.Settings.AppHost + dbUser.AvatarThumbnailPath;
+            var model = new UserInfoWrapper()
+            {
+                UserInfo = Mapper.Map<UserInfoModel>(dbInfo)
+            };
+            model.UserInfo.AvatarPath = dbUser.AvatarPath;
+            model.UserInfo.AvatarThumbnailPath = dbUser.AvatarThumbnailPath;
 
+            if (dbInfo.Patients.Any())
+            {
+                model.SpeciciedInfo = Mapper.Map<PatientInfoModel>(dbInfo.Patients.First());
+                return View(model);
+            }
+
+            model.SpeciciedInfo = Mapper.Map<DoctorInfoModel>(dbInfo.Doctors.First());
             return View(model);
         }
 
@@ -85,7 +88,7 @@ namespace eDoc.Web.Controllers
                 return View("Index", model);
             }
 
-            var dbEntry = _uow.UserPersonalInfo.Get(User.Identity.GetUserId());
+            var dbEntry = UnitOfWork.UserPersonalInfo.Get(User.Identity.GetUserId());
             if (dbEntry == null)
                 return HttpNotFound();
 
@@ -102,8 +105,8 @@ namespace eDoc.Web.Controllers
             dbEntry.AllowToSMS = model.AllowToSMS;
             dbEntry.AllowEmailingMe = model.AllowEmailingMe;
 
-            _uow.UserPersonalInfo.Update(dbEntry);
-            _uow.SaveChanges();
+            UnitOfWork.UserPersonalInfo.Update(dbEntry);
+            UnitOfWork.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -125,7 +128,7 @@ namespace eDoc.Web.Controllers
                 if (!String.IsNullOrEmpty(ext))
                 {
                     file.SaveAs(Server.MapPath(imgPath));
-                    
+
                     try
                     {
                         using (var srcImage = Image.FromFile(fullPath))
@@ -138,16 +141,16 @@ namespace eDoc.Web.Controllers
                             graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
                             graphics.DrawImage(srcImage, new Rectangle(0, 0, 100, 100));
                             thumbnail.Save(Path.Combine(Server.MapPath(relativePath), thumbnailFileName), ImageFormat.Png);
-                            
-                            var curUser = _uow.Users.Get(User.Identity.GetUserId());
+
+                            var curUser = UnitOfWork.Users.Get(User.Identity.GetUserId());
                             if (curUser == null)
                                 throw new Exception("Unexpected exception on User");
 
                             curUser.AvatarPath = imgPath.Replace("~", "");
                             curUser.AvatarThumbnailPath = Path.Combine(relativePath, thumbnailFileName).Replace("~", "");
-                            _uow.SaveChanges();
+                            UnitOfWork.SaveChanges();
                         }
-                        //var curUser = _uow
+                        //var curUser = UnitOfWork
                     }
                     catch (Exception ex)
                     {
@@ -419,8 +422,6 @@ namespace eDoc.Web.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-        private readonly DbUnitOfWork _uow;
-        private readonly IMapper _mapper;
 
         private IAuthenticationManager AuthenticationManager
         {

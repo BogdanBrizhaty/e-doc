@@ -234,8 +234,10 @@
     <Compile Include="Common\Singleton.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\ControllerBase.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -246,9 +248,12 @@
     <Compile Include="Managers\MigrationManager.cs" />
     <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DoctorInfoModel.cs" />
     <Compile Include="Models\Home\LatestBlogsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PatientInfoModel.cs" />
     <Compile Include="Models\UserInfoViewModel.cs" />
+    <Compile Include="Models\UserInfoWrapper.cs" />
     <Compile Include="NInject\Modules\AutoMapperModule.cs" />
     <Compile Include="NInject\NInjectDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -262,7 +267,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\12-50-secrets-hospitals-our-human-side2.jpg" />
     <Content Include="Content\img\12-50-secrets-hospitals-our-human-side_560.jpg" />
-    <Content Include="Content\img\if_boy_403024.png" />
+    <Content Include="Content\img\default-male-patient-avatar.png" />
+    <Content Include="Content\img\default-male-doctor-avatar.png" />
     <Content Include="Content\img\logo-hospital.png" />
     <Content Include="Content\img\male3-512.png" />
     <Content Include="Content\img\new-logo.png" />
@@ -317,8 +323,14 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Manage\DoctorInfo.cshtml" />
+    <Content Include="Views\Manage\PersonalInfo.cshtml" />
+    <Content Include="Views\Manage\PatientInfo.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controllers\Doctor\" />
+    <Folder Include="Controllers\Patient\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,0 +1,177 @@
+﻿@model eDoc.Web.Models.UserInfoModel
+
+<style>
+    #edit-personal-info .row, #edit-avatar .row {
+        padding: 5px 0;
+    }
+</style>
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Ваші персональні дані</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm("ChangePersonalInfo", "Manage", FormMethod.Post, new { @class = "form-group", id = "edit-personal-info" }))
+            {
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.Label("Пароль")</div>
+                        <div class="col-md-8">[@Html.ActionLink("Змінити пароль", "ChangePassword")]</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.LabelFor(m => m.CreationDate)</div>
+                        <div class="col-md-8">@Html.Raw(Model.CreationDate.ToLongDateString())</div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.LabelFor(m => m.ContactEmail)</div>
+                        <div class="col-md-8">@Html.TextBoxFor(m => m.ContactEmail, new { @class = "form-control", disabled = true })</div>
+                        <div class="col-md-8 col-md-offset-3 text-danger">@Html.ValidationMessageFor(m => m.ContactEmail)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.LabelFor(m => m.CellPhone)</div>
+                        <div class="col-md-8">@Html.TextBoxFor(m => m.CellPhone, new { @class = "form-control", disabled = true })</div>
+                        <div class="col-md-8 col-md-offset-3 text-danger">@Html.ValidationMessageFor(m => m.CellPhone)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.Label("Дозволити")</div>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>@Html.CheckBoxFor(m => m.AllowToCall, new { disabled = true }) дзвінки</label>
+                            </div>
+                            <div class="checkbox">
+                                <label>@Html.CheckBoxFor(m => m.AllowToSMS, new { disabled = true }) СМС сповіщення</label>
+                            </div>
+                            <div class="checkbox">
+                                <label>@Html.CheckBoxFor(m => m.AllowEmailingMe, new { disabled = true }) електронні повідомлення</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.LabelFor(m => m.LastName)</div>
+                        <div class="col-md-8">@Html.TextBoxFor(m => m.LastName, new { @class = "form-control", disabled = true })</div>
+                        <div class="col-md-8 col-md-offset-3 text-danger">@Html.ValidationMessageFor(m => m.LastName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.LabelFor(m => m.FirstName)</div>
+                        <div class="col-md-8">@Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", disabled = true })</div>
+                        <div class="col-md-8 col-md-offset-3 text-danger">@Html.ValidationMessageFor(m => m.FirstName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.LabelFor(m => m.Patronymic)</div>
+                        <div class="col-md-8">@Html.TextBoxFor(m => m.Patronymic, new { @class = "form-control", disabled = true })</div>
+                        <div class="col-md-8 col-md-offset-3 text-danger">@Html.ValidationMessageFor(m => m.Patronymic)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.LabelFor(m => m.BirthDate)</div>
+                        <div class="col-md-8">@Html.TextBoxFor(m => m.BirthDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", disabled = true })</div>
+                        <div class="col-md-8 col-md-offset-3 text-danger">@Html.ValidationMessageFor(m => m.BirthDate)</div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.LabelFor(m => m.RegistrationAddress)</div>
+                        <div class="col-md-8">@Html.TextBoxFor(m => m.RegistrationAddress, new { @class = "form-control", disabled = true })</div>
+                        <div class="col-md-8 col-md-offset-3 text-danger">@Html.ValidationMessageFor(m => m.RegistrationAddress)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-1">@Html.LabelFor(m => m.CurrentAddress)</div>
+                        <div class="col-md-8">@Html.TextBoxFor(m => m.CurrentAddress, new { @class = "form-control", disabled = true })</div>
+                        <div class="col-md-8 col-md-offset-3 text-danger">@Html.ValidationMessageFor(m => m.CurrentAddress)</div>
+                    </div>
+                    <hr />
+                    <div class="row text-center">
+                        <div class="col-md-6 col-md-offset-3">
+                            <input type="button" id="edit-personal-info-btn" class="btn btn-default" value="Редагувати" />
+                            <input type="submit" id="submit-personal-info-btn" class="btn btn-primary" disabled />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <div class="col-md-6" id="edit-avatar">
+            @*Image zone*@
+            @using (Html.BeginForm("ChangePhoto", "Manage", FormMethod.Post, new { @class = "form-group", enctype = "multipart/form-data" }))
+            {
+                <div id="img-original" class="row text-center">
+                    <div style="height: 400px; width: 400px; margin-left: calc(50% - 200px); overflow: hidden;">
+                        <img class="img-responsive" data-original-src="@Model.AvatarPath" src="@Model.AvatarPath" />
+                    </div>
+                    <div class="col-md-6 col-md-offset-3">
+                        <input type="file" id="ImageFile" name="ImageFile" onchange="previewFile()" class="form-control"><br>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <input type="button" class="btn btn-default" onclick="cancelAvatarPreview()" value="Відмінити" />
+                    <input type="submit" class="btn btn-primary" value="Оновити" />
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+<script>
+    function cancelAvatarPreview() {
+        var originalSrc = $('img').attr('data-original-src');
+        $('img').attr('src', originalSrc);
+    }
+    function previewFile() {
+        var preview = document.querySelector('img'); //selects the query named img
+        var file = document.querySelector('input[type=file]').files[0]; //sames as here
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file); //reads the data as a URL
+        } else {
+            preview.src = "";
+        }
+    }
+
+    //previewFile();  //calls the function named previewFile()
+
+    var clean;
+    var editMode = false;
+
+    $('.text-danger').each(function () {
+        if (editMode == true)
+            return;
+
+        if ($(this).text() !== '') {
+            editMode = true;
+            enableEditMode();
+        }
+    });
+
+    $(document).ready(function () {
+        clean = $('#CurrentAddress').val() === '';
+    });
+    $('#edit-personal-info-btn').click(function () {
+        var inEditMode = $('#submit-personal-info-btn').attr('disabled');
+        if (inEditMode === 'disabled') {
+            $(this).val('Відмінити');
+            enableEditMode();
+            return;
+        }
+        window.location.href = '/Manage/Index';
+    })
+
+    function enableEditMode() {
+        $('input:disabled').each(function () {
+            $(this).attr('disabled', false);
+        });
+    }
+
+    $('#RegistrationAddress').keypress(function () {
+        if (clean) {
+            $('#CurrentAddress').val($('#CurrentAddress').val() + String.fromCharCode(event.which));
+        }
+    })
+</script>

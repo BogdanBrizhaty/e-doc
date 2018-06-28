@@ -13,6 +13,12 @@ namespace eDoc.Web.AutoMapper.Profiles
         {
             CreateMap<UserPersonalInfo, UserInfoModel>();
             CreateMap<UserInfoModel, UserPersonalInfo>();
+
+            CreateMap<DoctorInfoModel, Doctor>();
+            CreateMap<Doctor, DoctorInfoModel>();
+
+            CreateMap<PatientInfoModel, Patient>();
+            CreateMap<Patient, PatientInfoModel>();
         }
     }
 }
