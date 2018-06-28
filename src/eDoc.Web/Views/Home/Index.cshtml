@@ -155,9 +155,14 @@
 <div id="main-content-holder">
     <section id="home">
         <div class="row header">
-            <div class="logo-hospital"><img src="../../Content/img/new-logo.png" height="128" width="128" /></div>
-            <div style=color: black;" class="row branding-title text-center">@appName - якість, якій можна довіряти</div>
-            <div style=color: black;" class="row branding-descr text-center">@Html.Raw(descr)</div>
+            <div class="col-xs-3">
+                <div class=""><img src="../../Content/img/new-logo.png" height="128" width="128" /></div>
+            </div>
+            <div class="col-xs-9">
+                <div style=color: black;" class="row branding-title text-center">@appName - якість, якій можна довіряти
+                <a style="font-size: 12pt; float: right; margin: 10px;" href="/Account/Login">Log in</a></div>
+                <div style=color: black;" class="row branding-descr text-center">@Html.Raw(descr)</div>
+            </div>
         </div>
         <div class="row home-menu text-center">
             <a href="#home" class="menu-option">Головна</a>
@@ -172,12 +177,16 @@
             <div id="clickable-right-target" class="half-clickable">&nbsp;</div>
             <div class="you-are" style="font-size: 36pt;">Ви...</div>
             <div class="clickable-container" style="position:absolute; top: 0; left: 0; width: 100%; height: 560px;">
-                <div id="clickable-left" style="color: white; font-size: 36pt; font-weight: 500; opacity: 0.75; " class="half-clickable-link">
-                    <div style="margin-top: 375px; width: 250px; float: left;">Пацієнт</div>
-                </div>
-                <div id="clickable-right" style="color: white; font-size: 36pt; font-weight: 500; opacity: 0.75; " class="half-clickable-link">
-                    <div style="margin-top: 375px; width: 250px; float: right;">Лікар</div>
-                </div>
+                <a href="/Registration/Patient">
+                    <div id="clickable-left" style="color: white; font-size: 36pt; font-weight: 500; opacity: 0.75; " class="half-clickable-link">
+                        <div style="margin-top: 375px; width: 250px; float: left;">Пацієнт</div>
+                    </div>
+                </a>
+                <a href="/Registration/Doctor">
+                    <div id="clickable-right" style="color: white; font-size: 36pt; font-weight: 500; opacity: 0.75; " class="half-clickable-link">
+                        <div style="margin-top: 375px; width: 250px; float: right;">Лікар</div>
+                    </div>
+                </a>
             </div>
         </div>
         <section id="services">

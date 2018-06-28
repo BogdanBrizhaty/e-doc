@@ -6,7 +6,7 @@ namespace eDoc.Web.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Імейл")]
         public string Email { get; set; }
     }
 
@@ -42,22 +42,22 @@ namespace eDoc.Web.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Імейл")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Імейл")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запам'ятати мене")]
         public bool RememberMe { get; set; }
     }
 
@@ -65,16 +65,16 @@ namespace eDoc.Web.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Імейл")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [Display(Name = "Password")]
+        [StringLength(100, ErrorMessage = "{0} Має бути довшим за {2} символів.", MinimumLength = 6)]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Підтвердіть пароль")]
+        [Compare("Пароль", ErrorMessage = "Паролі не співпадають.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
@@ -86,16 +86,16 @@ namespace eDoc.Web.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Імейл")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [Display(Name = "Password")]
+        [StringLength(100, ErrorMessage = "{0} має бути довшим за {2} символів.", MinimumLength = 6)]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Пароль", ErrorMessage = "Паролі не співпадають")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -105,7 +105,7 @@ namespace eDoc.Web.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Імейл")]
         public string Email { get; set; }
     }
 }
