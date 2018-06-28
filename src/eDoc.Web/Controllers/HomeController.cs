@@ -24,6 +24,7 @@ namespace eDoc.Web.Controllers
 
         public ActionResult Index(bool force = false)
         {
+            ViewBag.ShowTopBar = Request.IsAuthenticated;
             var model = new LatestBlogsViewModel()
             {
                 Blogs = new List<ShortBlogPostViewModel>()

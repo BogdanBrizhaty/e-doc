@@ -66,6 +66,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -103,6 +106,8 @@
     <Compile Include="Data\Repositories\AppUserRepository.cs" />
     <Compile Include="Data\Repositories\Base\EfRepostitoryBase.cs" />
     <Compile Include="Data\Repositories\Base\IRepository.cs" />
+    <Compile Include="Data\Repositories\DoctorRepository.cs" />
+    <Compile Include="Data\Repositories\PatientRepository.cs" />
     <Compile Include="Data\Repositories\PersonalUserInfoRepository.cs" />
     <Compile Include="Data\UserPhoneNumber.cs" />
     <Compile Include="Extensions\DateTimeExt.cs" />

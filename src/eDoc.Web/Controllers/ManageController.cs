@@ -70,7 +70,7 @@ namespace eDoc.Web.Controllers
             var dbInfo = _uow.UserPersonalInfo.Get(userId);
 
             var model = _mapper.Map<UserInfoModel>(dbInfo);
-            var dbUser = _uow.UserRepository.Get(User.Identity.GetUserId());
+            var dbUser = _uow.Users.Get(User.Identity.GetUserId());
             model.AvatarPath = App.Settings.AppHost + dbUser.AvatarPath;
             model.AvatarThumbnailPath = App.Settings.AppHost + dbUser.AvatarThumbnailPath;
 
@@ -139,7 +139,7 @@ namespace eDoc.Web.Controllers
                             graphics.DrawImage(srcImage, new Rectangle(0, 0, 100, 100));
                             thumbnail.Save(Path.Combine(Server.MapPath(relativePath), thumbnailFileName), ImageFormat.Png);
                             
-                            var curUser = _uow.UserRepository.Get(User.Identity.GetUserId());
+                            var curUser = _uow.Users.Get(User.Identity.GetUserId());
                             if (curUser == null)
                                 throw new Exception("Unexpected exception on User");
 

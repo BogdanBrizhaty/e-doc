@@ -1,6 +1,6 @@
 ﻿@model eDoc.Web.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Реєстрація";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -27,6 +27,14 @@
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.IsDoctor, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                <label>@Html.CheckBoxFor(m => m.IsDoctor, new { disabled = true })</label>
+            </div>
         </div>
     </div>
     <div class="form-group">

@@ -12,26 +12,20 @@ using eDoc.Web.Models;
 using eDoc.Model.Data.Entities;
 using eDoc.Model.Managers;
 using eDoc.Model.UnitOfWork;
+using eDoc.Model.Services;
 
 namespace eDoc.Web.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : Base.ControllerBase
     {
         private SignInManagerBase _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController(DbUnitOfWork uow)
+        public AccountController()
         {
-            _uow = uow;
-        }
 
-        public AccountController(ApplicationUserManager userManager, SignInManagerBase signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
         }
-
         public SignInManagerBase SignInManager
         {
             get
@@ -61,6 +55,7 @@ namespace eDoc.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            ViewBag.ShowTopBar = false;
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -138,16 +133,6 @@ namespace eDoc.Web.Controllers
             }
         }
 
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -155,34 +140,14 @@ namespace eDoc.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUserBase
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    CreationDate = DateTime.UtcNow,
-                    LastModifiedDate = DateTime.UtcNow,
-                    LastVisitedDate = DateTime.UtcNow
-                };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    var newUserInfo = new UserPersonalInfo() { Id = user.Id, ContactEmail = model.Email };
-                    _uow.UserPersonalInfo.Add(newUserInfo);
-                    await _uow.SaveChangesAsync();
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
+                var regService = new UserRegistrationService(UserManager, UnitOfWork);
+                var created = model.IsDoctor
+                    ? await regService.CreateDoctor(model.Email, model.Password)
+                    : await regService.CreatePatient(model.Email, model.Password);
+                await SignInManager.SignInAsync(created, isPersistent: false, rememberBrowser: false);
+                return RedirectToAction("Index", "Manage");
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
@@ -440,7 +405,6 @@ namespace eDoc.Web.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-        private readonly DbUnitOfWork _uow;
 
         private IAuthenticationManager AuthenticationManager
         {

@@ -18,8 +18,12 @@ namespace eDoc.Model.UnitOfWork
         public DbUnitOfWork() { }
 
         public DbUnitOfWork(IDbContextFactory<ApplicationContextBase> contextFactory)
+            :this(contextFactory.Create())
         {
-            Context = contextFactory.Create();
+        }
+        public DbUnitOfWork(ApplicationContextBase applicationContextBase)
+        {
+            Context = applicationContextBase;
             InitializeRepositories();
         }
 
@@ -34,14 +38,18 @@ namespace eDoc.Model.UnitOfWork
         #region Repositories
 
         public PersonalUserInfoRepository UserPersonalInfo { get; set; }
-        public AppUserRepository UserRepository { get; set; }
+        public AppUserRepository Users { get; set; }
+        public PatientRepository Patients { get; set; }
+        public DoctorRepository Doctors { get; set; }
 
         #endregion
 
         private void InitializeRepositories()
         {
             UserPersonalInfo = new PersonalUserInfoRepository(Context);
-            UserRepository = new AppUserRepository(Context);
+            Users = new AppUserRepository(Context);
+            Patients = new PatientRepository(Context);
+            Doctors = new DoctorRepository(Context);
         }
     }
 }

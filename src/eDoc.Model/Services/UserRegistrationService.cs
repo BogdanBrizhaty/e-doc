@@ -22,19 +22,33 @@ namespace eDoc.Model.Services
             _uow = uow;
             _utcExectionTime = DateTime.UtcNow;
         }
-        public async Task CreateDoctor(string email, string password)
+        public async Task<ApplicationUserBase> CreateDoctor(string email, string password)
         {
-            await CreateUserAccount(email, password);
-            //var docor = new doctor
+            var wrapper = await CreateUserAccount(email, password);
+            var doctor = new Doctor()
+            {
+                UserPersonalInfoId = wrapper.Info.Id,
+                Bio = "Your bio here..."
+            };
+            _uow.Doctors.Add(doctor);
+            await _uow.SaveChangesAsync();
+            return wrapper.Account;
         }
 
-        public async Task CreatePatient(string email, string password)
+        public async Task<ApplicationUserBase> CreatePatient(string email, string password)
         {
-            await CreateUserAccount(email, password);
-            //var docor = new patient
+            var wrapper = await CreateUserAccount(email, password);
+            var patient = new Patient()
+            {
+                UserPersonalInfoId = wrapper.Info.Id,
+                LastVisit = null
+            };
+            _uow.Patients.Add(patient);
+            await _uow.SaveChangesAsync();
+            return wrapper.Account;
         }
 
-        private async Task CreateUserAccount(string email, string password)
+        private async Task<(ApplicationUserBase Account, UserPersonalInfo Info)> CreateUserAccount(string email, string password)
         {
             var user = new ApplicationUserBase()
             {
@@ -43,7 +57,7 @@ namespace eDoc.Model.Services
                 CreationDate = _utcExectionTime,
                 LastModifiedDate = _utcExectionTime,
                 LastVisitedDate = _utcExectionTime,
-                AvatarPath = @"//Resources//Images/Defaults\default-avatar-doc.jpg", // move to constant or cfg
+                AvatarPath = @"//Resources//Images/Defaults\default-avatar-doc.jpg", // todo: move to constant or cfg
                 AvatarThumbnailPath = @"//Resources//Images/Defaults\default-avatar-doc.jpg",
             };
             if ((await _userManager.CreateAsync(user, password)).Succeeded)
@@ -57,7 +71,9 @@ namespace eDoc.Model.Services
                     LastModifiedDate = _utcExectionTime
                 };
                 _uow.UserPersonalInfo.Add(newUserInfo);
+                return (Account: user, Info: newUserInfo);
             }
+            throw new Exception("Unexpected exception");
         }
     }
 }

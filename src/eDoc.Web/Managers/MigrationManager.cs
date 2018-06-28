@@ -60,12 +60,10 @@ namespace eDoc.Web.Managers
                     throw new ArgumentException();
 
                 _fileManager = fileManager ?? throw new ArgumentNullException();
-                FilePath = fPath;
             }
 
             protected async override void OnExecute(ApplicationContextBase contextBase)
             {
-                // map to server location
                 var command = await _fileManager.GetContent(FilePath);
                 contextBase.Database.ExecuteSqlCommand(command);
             }
