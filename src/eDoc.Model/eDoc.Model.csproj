@@ -147,6 +147,10 @@
     <Compile Include="Migrations\201806252007126_AvatarAndThumbnail_added.Designer.cs">
       <DependentUpon>201806252007126_AvatarAndThumbnail_added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806281621520_entities_added___Doctor_Patient_MedicalTest_MedicalTestResult_MedicalTestReferral_Contingent.cs" />
+    <Compile Include="Migrations\201806281621520_entities_added___Doctor_Patient_MedicalTest_MedicalTestResult_MedicalTestReferral_Contingent.Designer.cs">
+      <DependentUpon>201806281621520_entities_added___Doctor_Patient_MedicalTest_MedicalTestResult_MedicalTestReferral_Contingent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\OwinFactory.cs" />
@@ -191,6 +195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806252007126_AvatarAndThumbnail_added.resx">
       <DependentUpon>201806252007126_AvatarAndThumbnail_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806281621520_entities_added___Doctor_Patient_MedicalTest_MedicalTestResult_MedicalTestReferral_Contingent.resx">
+      <DependentUpon>201806281621520_entities_added___Doctor_Patient_MedicalTest_MedicalTestResult_MedicalTestReferral_Contingent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

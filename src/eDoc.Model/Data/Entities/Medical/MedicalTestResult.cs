@@ -24,8 +24,6 @@ namespace eDoc.Model.Data.Entities
         public string Details { get; set; }
 
         // foreign keys
-        [ForeignKey("MedicalTestReferral")]
-        public string MedicalTestReferralId { get; set; }
         [ForeignKey("Patient")]
         public string PatientId { get; set; }
 
