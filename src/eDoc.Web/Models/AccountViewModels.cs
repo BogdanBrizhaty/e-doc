@@ -74,7 +74,7 @@ namespace eDoc.Web.Models
         public string Password { get; set; }
 
         [Display(Name = "Підтвердіть пароль")]
-        [Compare("Пароль", ErrorMessage = "Паролі не співпадають.")]
+        [Compare("Password", ErrorMessage = "Паролі не співпадають.")]
         public string ConfirmPassword { get; set; }
 
         [Required]

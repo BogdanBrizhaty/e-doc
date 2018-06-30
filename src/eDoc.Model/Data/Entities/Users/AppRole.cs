@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace eDoc.Model.Data.Entities
 {
-    public partial class AppRole : IdentityRole
+    public partial class AppRole : IdentityRole, IDbEntity<string>
     {
         public int Role { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime LastModifiedDate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

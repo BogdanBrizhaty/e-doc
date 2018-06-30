@@ -1,4 +1,6 @@
-﻿using eDoc.Web.Models;
+﻿using eDoc.Model.Common.Enums;
+using eDoc.Web.Base.Authorization;
+using eDoc.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Web.Mvc;
 
 namespace eDoc.Web.Controllers
 {
+    [RoleAuthorize(ApplicationRoles = RoleAccessPoint.Doctor | RoleAccessPoint.SuperUser | RoleAccessPoint.Administrator | RoleAccessPoint.SystemProfile)]
     public class DoctorController : Base.ControllerBase
     {
         [HttpPost]
@@ -31,6 +34,12 @@ namespace eDoc.Web.Controllers
 
             await UnitOfWork.SaveChangesAsync();
             return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpGet]
+        public ActionResult TestDoctorAccess()
+        {
+            return Content("doctor and administrative access");
         }
     }
 }

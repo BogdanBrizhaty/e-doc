@@ -14,5 +14,12 @@ namespace eDoc.Model.Data.Repositories
         public AppUserRepository(ApplicationContextBase applicationContext) : base(applicationContext)
         {
         }
+        public (ApplicationUserBase User, AppRole Role) GetWithRole(string userId)
+        {
+            var usr = Get(userId);
+            var roleid = usr.Roles.FirstOrDefault().RoleId;
+            var role = Context.Set<AppRole>().FirstOrDefault(r => r.Id == roleid);
+            return (usr, role);
+        }
     }
 }

@@ -227,18 +227,20 @@
     <Compile Include="AutoMapper\Profiles\AccountMappingProfile.cs" />
     <Compile Include="Base\App.Settings.cs" />
     <Compile Include="Base\App.Base.cs" />
+    <Compile Include="Base\Authorization\RoleAuthorizeAttributre.cs" />
     <Compile Include="Common\Exceptions\AppAlreadyInitializedException.cs" />
     <Compile Include="Common\Exceptions\AppExceptionEventArgs.cs" />
     <Compile Include="Common\Exceptions\NotInitializableTypeException.cs" />
     <Compile Include="Common\Exceptions\SessionNotStartedException.cs" />
     <Compile Include="Common\Singleton.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Account\AccountController.cs" />
     <Compile Include="Controllers\Base\ControllerBase.cs" />
-    <Compile Include="Controllers\DoctorController.cs" />
+    <Compile Include="Controllers\Doctor\DoctorController.cs" />
+    <Compile Include="Controllers\Error\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PatientController.cs" />
-    <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\Account\ManageController.cs" />
+    <Compile Include="Controllers\Patient\PatientController.cs" />
+    <Compile Include="Controllers\Account\RegistrationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -326,11 +328,9 @@
     <Content Include="Views\Manage\DoctorInfo.cshtml" />
     <Content Include="Views\Manage\PersonalInfo.cshtml" />
     <Content Include="Views\Manage\PatientInfo.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\Doctor\" />
-    <Folder Include="Controllers\Patient\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

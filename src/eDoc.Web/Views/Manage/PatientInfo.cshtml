@@ -2,7 +2,7 @@
 @using eDoc.Model.Data.Entities
 @{
     var genders = Enum
-        .GetValues(typeof())
+        .GetValues(typeof(Gender))
         .Cast<int>()
         .Select(v => new SelectListItem()
         {
@@ -22,8 +22,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LastVisit, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LastVisit, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-                @Html.ValidationMessageFor(model => model.LastVisit, "{0:yyyy-MM-dd}", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.LastVisit, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", disabled = true })
+                @Html.ValidationMessageFor(model => model.LastVisit, "", new { @class = "text-danger" })
             </div>
         </div>
 

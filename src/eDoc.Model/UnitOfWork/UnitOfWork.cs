@@ -1,4 +1,5 @@
 ﻿using eDoc.Model.Data.Context;
+using eDoc.Model.Data.Entities;
 using eDoc.Model.Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eDoc.Model.UnitOfWork
 {
-    public class DbUnitOfWork : IUnitOfWork
+    public class DbUnitOfWork : IUnitOfWork, IDisposable
     {
         protected ApplicationContextBase Context { get; }
 
@@ -39,6 +40,7 @@ namespace eDoc.Model.UnitOfWork
 
         public PersonalUserInfoRepository UserPersonalInfo { get; set; }
         public AppUserRepository Users { get; set; }
+        public AppRoleRepository Roles { get; set; }
         public PatientRepository Patients { get; set; }
         public DoctorRepository Doctors { get; set; }
 
@@ -50,6 +52,12 @@ namespace eDoc.Model.UnitOfWork
             Users = new AppUserRepository(Context);
             Patients = new PatientRepository(Context);
             Doctors = new DoctorRepository(Context);
+            Roles = new AppRoleRepository(Context); 
+        }
+
+        public void Dispose()
+        {
+            ((IDisposable)Context).Dispose();
         }
     }
 }
