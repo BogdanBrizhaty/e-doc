@@ -87,6 +87,7 @@
     <Compile Include="Data\Context\ApplicationContextBase.cs" />
     <Compile Include="Data\Context\ContextFactory.cs" />
     <Compile Include="Data\Context\eDocContext.cs" />
+    <Compile Include="Data\Entities\Appointment.cs" />
     <Compile Include="Data\Entities\Medical\CommonMedicalRecord.cs" />
     <Compile Include="Data\Entities\Medical\DiseaseComplaint.cs" />
     <Compile Include="Data\Entities\Medical\Tests\MedicalTest.cs" />
@@ -168,6 +169,10 @@
     <Compile Include="Migrations\201806292303277_AspRoles_upd.Designer.cs">
       <DependentUpon>201806292303277_AspRoles_upd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806301440217_Appointment_added.cs" />
+    <Compile Include="Migrations\201806301440217_Appointment_added.Designer.cs">
+      <DependentUpon>201806301440217_Appointment_added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\OwinFactory.cs" />
@@ -222,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806292303277_AspRoles_upd.resx">
       <DependentUpon>201806292303277_AspRoles_upd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806301440217_Appointment_added.resx">
+      <DependentUpon>201806301440217_Appointment_added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

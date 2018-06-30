@@ -13,9 +13,7 @@ namespace eDoc.Model.Data.Entities
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUserBase, string> manager)
         {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Add custom user claims here
             return userIdentity;
         }
         
@@ -28,8 +26,6 @@ namespace eDoc.Model.Data.Entities
         public string AvatarPath { get; set; }
         public string AvatarThumbnailPath { get; set; }
 
-
         public virtual UserPersonalInfo PersonalInfo { get; set; }
-
     }
 }

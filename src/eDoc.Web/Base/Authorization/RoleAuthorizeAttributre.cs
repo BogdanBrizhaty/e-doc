@@ -23,18 +23,13 @@ namespace eDoc.Web.Base.Authorization
                 return false;
             }
             var uow = DependencyResolver.Current.GetService<DbUnitOfWork>();
-
             string curUserId = httpContext.User.Identity.GetUserId();
             var dbRole = uow.Users.GetWithRole(curUserId).Role;
 
             if (dbRole == null)
                 return false;
 
-            // todo: check
-            if (ApplicationRoles.HasFlag((RoleAccessPoint)dbRole.Role))
-                return true;
-
-            return false;
+            return ApplicationRoles.HasFlag((RoleAccessPoint)dbRole.Role);
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
@@ -50,5 +45,4 @@ namespace eDoc.Web.Base.Authorization
             }
         }
     }
-
 }
