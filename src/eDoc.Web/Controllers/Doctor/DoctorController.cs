@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace eDoc.Web.Controllers
 {
-    [RoleAuthorize(ApplicationRoles = RoleAccessPoint.Doctor | RoleAccessPoint.SuperUser | RoleAccessPoint.Administrator | RoleAccessPoint.SystemProfile)]
+    [RoleAuthorize(ApplicationRoles = RoleAccessPoint.Doctor | RoleAccessPoint.Administrator | RoleAccessPoint.SystemProfile)]
     public class DoctorController : Base.ControllerBase
     {
         [HttpPost]

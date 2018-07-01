@@ -151,6 +151,32 @@
         /*background-image: url('');*/
         /*background-image: url('../../Content/img/logo-hospital.png');*/
     }
+
+    .service-icon {
+        height: 64px;
+        width: 64px;
+        margin-top: 25px;
+        margin-left: 93px;
+    }
+    .service-content {
+        color: white;
+    }
+    .block-text {
+        position: absolute;
+        padding-top: 32px;
+    }
+    .block-overflow {
+        height: 250px;
+        width: 250px;
+        background-color: #3D3D3D;
+        opacity: 0.5;
+        position: absolute;
+    }
+    .block-img {
+        position: absolute;
+        overflow: hidden;
+        width: 250px;
+    }
 </style>
 <div id="main-content-holder">
     <section id="home">
@@ -194,16 +220,61 @@
                 @*blocks*@
                 <div class="row" style="position: relative; background: green; height: 250px">
                     <div id="cell00" style="width: 250px; top: 0; left: 0; position: absolute; height: 250px; background-color: brown;">
-                        @*<div class="front" style="background-color: white;"></div>
-                            <div class="back" style="background-color: red;"></div>*@
+                        <div class="block-img text-center">
+                            <img height="250" src="~/Content/img/ask eye doctor.jpg" />
+                        </div>
+                        <div class="block-text block-overflow">
+
+                        </div>
+                        <div class="service-content text-center block-text" style="padding-top: 96px;">
+                            <h2>Якісний і зручний сервіс</h2>
+                        </div>
                     </div>
-                    <div style="width: 250px; top: 0; left: 250px; position: absolute; height: 250px; background-color: chartreuse"></div>
-                    <div style="width: 250px; top: 0; left: 500px; position: absolute; height: 250px; background-color: yellow;"></div>
+                    <div style="width: 250px; top: 0; left: 250px; position: absolute; height: 250px; background-color: chartreuse">
+                        <img src="~/Content/img/appointment.png" class="service-icon" />
+                        <div class="service-content text-center">
+                            <h2>Планування візитів</h2>
+                            <p>Ви можете легко домовитись та спланувати візит до вашого лікаря</p>
+                        </div>
+                    </div>
+                    <div style="width: 250px; top: 0; left: 500px; position: absolute; height: 250px; background-color: yellow;">
+                        <div class="block-img text-center">
+                            <img height="250" style="margin-left: -64px;" src="~/Content/img/11-50-secrets-hospitals-wont-tell-you-doctors-in-network.jpg" />
+                        </div>
+                        <div class="block-text block-overflow">
+
+                        </div>
+                        <div class="service-content text-center block-text" style="padding-top: 96px;">
+                            <h2>Сертифіковані спеціалісти</h2>
+                        </div>
+                    </div>
                 </div>
                 <div class="row" style="background: blue; position: relative; height: 250px">
-                    <div style="width: 250px; top: 0; left: 0; position: absolute; height: 250px; background-color: yellow;"></div>
-                    <div style="width: 250px; top: 0; left: 500px; position: absolute; height: 250px; background-color: chartreuse"></div>
-                    <div style="width: 250px; top: 0; left: 250px; position: absolute; height: 250px; background-color: brown;"></div>
+                    <div style="width: 250px; top: 0; left: 0; position: absolute; height: 250px; background-color: brown;">
+                        <img src="~/Content/img/pill-white.png" class="service-icon" />
+                        <div class="service-content text-center">
+                            <h2>Високоякісне лікування</h2>
+                            <p>Лікар вибере для вас найбільш підходящу рецептуру</p>
+                        </div>
+                    </div>
+                    <div style="width: 250px; top: 0; left: 500px; position: absolute; height: 250px; background-color: chartreuse">
+                        <img src="~/Content/img/blank-white.png" class="service-icon" />
+                        <div class="service-content text-center">
+                            <h2>Електронний облік</h2>
+                            <p>Отримуйте останню інформацію де б ви не були</p>
+                        </div>
+                    </div>
+                    <div style="width: 250px; top: 0; left: 250px; position: absolute; height: 250px; background-color: brown;">
+                        <div class="block-img text-center">
+                            <img height="250" style="margin-left: -64px;" src="~/Content/img/09-50-secrets-hospitals-what-we-get-right.jpg" />
+                        </div>
+                        <div class="block-text block-overflow">
+
+                        </div>
+                        <div class="service-content text-center block-text" style="padding-top: 96px;">
+                            <h2>Якісна консультація</h2>
+                        </div>
+                    </div>
                 </div>
                 @*<div class="row" style="background: yellow; position: relative; height: 250px">
                         <div style="width: 250px; top: 0; left: 0; position: absolute; height: 250px; background-color: chartreuse"></div>
